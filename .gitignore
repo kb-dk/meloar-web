@@ -1,0 +1,10 @@
+# javascript app
+src/js/config/index.js
+src/js/dist
+src/js/node_modules
+src/js/.vscode
+npm-debug.log*
+.DS_Store*
+src/js/test/unit/coverage/
+src/js/test/e2e/reports/
+selenium-debug.log
