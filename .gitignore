@@ -1,5 +1,5 @@
 # javascript app
-#src/js/config/index.js
+src/js/config/index.js
 src/js/dist
 src/js/node_modules
 src/js/.vscode
