@@ -1,4 +1,5 @@
 import searchState from "../store/searchStore.js";
+import '../assets/styles/search.less';
 
 export default {
   name: "SearchBox",
@@ -14,11 +15,11 @@ export default {
       <div class="searchbox">
         <form onSubmit={e => this.search(e)}>
           <input
-            type="text"
+            type="text" placeholder="Let's go!"
             value={this.searchState.query}
             onInput={e => (this.searchState.query = e.target.value)}
           />
-          <button type="submit">Search</button>
+          <button title="Search" type="submit"></button>
         </form>
       </div>
     );

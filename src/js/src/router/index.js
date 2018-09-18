@@ -3,6 +3,8 @@ import Router from "vue-router";
 
 import HomeContainer from "../containers/HomeContainer.js";
 import SearchContainer from "../containers/SearchContainer.js";
+import AboutContainer from "../containers/AboutContainer.js";
+
 
 Vue.use(Router);
 
@@ -21,6 +23,11 @@ const router = new Router({
       path: "/search/:query",
       name: "search",
       component: SearchContainer
+    },
+    {
+      path:"/about",
+      name:"about",
+      component:AboutContainer
     }
   ]
 });
