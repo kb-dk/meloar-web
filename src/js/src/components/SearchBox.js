@@ -5,8 +5,6 @@ export default {
   data: () => ({ searchState }),
   methods: {
     search(e) {
-      console.log("searching!");
-
       this.$router.push({ name: "search", params: { query: this.searchState.query } });
       e.preventDefault();
     }
