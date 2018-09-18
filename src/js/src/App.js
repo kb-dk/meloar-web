@@ -1,4 +1,3 @@
-import SearchBox from "./components/SearchBox.js";
 import Home from "./containers/HomeContainer.js";
 
 export default {
@@ -9,7 +8,7 @@ export default {
     return (
       <div id="app">
         <div>
-          <Home />
+          <router-view />
         </div>
       </div>
     );

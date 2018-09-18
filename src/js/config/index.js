@@ -10,6 +10,14 @@ module.exports = {
     assetsSubDirectory: "static",
     assetsPublicPath: "/",
 
+    proxyTable: {
+      "/api/search": {
+        target: "http://tokemon.sb.statsbiblioteket.dk:9595/solr/meloar/select",
+        pathRewrite: { "^/api/search": "" },
+        changeOrigin: true
+      }
+    },
+
     // Various Dev Server settings
     host: "localhost", // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.HOST, if port is in use, a free one will be determined
@@ -17,6 +25,7 @@ module.exports = {
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
+    quiet: false,
 
     // Use Eslint Loader?
     // If true, your code will be linted during bundling and
