@@ -10,7 +10,7 @@ export default {
   render(h) {
     console.log("render is called");
     return (
-      <div>
+      <div class="searchContainer">
         <SearchResults searchResults={this.searchResult} />
         <div>{this.query}</div>
       </div>

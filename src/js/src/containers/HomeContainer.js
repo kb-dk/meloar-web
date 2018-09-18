@@ -10,9 +10,11 @@ export default {
 
   render(h) {
     return (
-      <div>
+      <div class="homeContainer">
         <SearchBox />
-        <div>Home sweet home</div>
+        <div class="simpleNavigation">
+        <router-link class="menuLink" to="/About">About this</router-link>
+        </div>
       </div>
     );
   }
