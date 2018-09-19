@@ -20,10 +20,15 @@ export default {
 
   render(h) {
     <div>
+      { $route.params.id }
+      Here!
       <RecordMetadata recordData={this.recordData} />
       <div>
         <PdfDocument pdfUrl={this.pdfUrl} startPage={this.startPage} />
       </div>
     </div>;
+  },
+  beforeRouteEnter(to, from, next) {
+    console.log("I came here!");
   }
 };

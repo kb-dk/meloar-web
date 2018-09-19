@@ -1,6 +1,6 @@
 
 export default {
-  name: "HomeContainer",
+  name: "AboutContainer",
 
   data: () => ({}),
 
