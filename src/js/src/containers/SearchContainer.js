@@ -1,6 +1,8 @@
 import searchState from "../store/searchStore.js";
 import { search } from "../services/SearchService.js";
 import SearchResults from "../components/SearchResults.js";
+import SearchBox from "../components/SearchBox";
+
 
 export default {
   name: "SearchContainer",
@@ -11,6 +13,7 @@ export default {
     console.log("render is called");
     return (
       <div class="searchContainer">
+      <SearchBox class="notFrontpage" />
         <SearchResults searchResults={this.searchResult} />
         <div>{this.query}</div>
       </div>
@@ -27,8 +30,8 @@ export default {
   },
 
   beforeRouteEnter(to, from, next) {
-    const searchResult = search("indbyggere");
-    search("indbyggere").then(searchResult => {
+    const searchResult = search("*.*");
+    search("*.*").then(searchResult => {
       console.log(searchResult);
       next(vm => {
         vm.setSearchResult(searchResult);
