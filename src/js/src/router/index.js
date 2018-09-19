@@ -4,7 +4,7 @@ import Router from "vue-router";
 import HomeContainer from "../containers/HomeContainer.js";
 import SearchContainer from "../containers/SearchContainer.js";
 import AboutContainer from "../containers/AboutContainer.js";
-
+import FullRecordContainer from "../containers/FullRecordContainer.js";
 
 Vue.use(Router);
 
@@ -25,9 +25,14 @@ const router = new Router({
       component: SearchContainer
     },
     {
-      path:"/about",
-      name:"about",
-      component:AboutContainer
+      path: "/about",
+      name: "about",
+      component: AboutContainer
+    },
+    {
+      path: "/record/:id",
+      name: "record",
+      component: FullRecordContainer
     }
   ]
 });

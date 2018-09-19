@@ -15,6 +15,12 @@ module.exports = {
         target: "http://tokemon.sb.statsbiblioteket.dk:9595/solr/meloar/select",
         pathRewrite: { "^/api/search": "" },
         changeOrigin: true
+      },
+      "/api/pdf": {
+        target:
+          "https://www.statsbiblioteket.dk/om-statsbiblioteket/Pressemeddelelse_Enestendesamlingafdanskeaviserfylder100.pdf",
+        pathRewrite: { "^/api/pdf": "" },
+        changeOrigin: true
       }
     },
 
