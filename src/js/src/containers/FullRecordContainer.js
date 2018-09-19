@@ -7,7 +7,7 @@ export default {
   data: () => ({ recordData: {}, pdfUrl: "", startPage: 0 }),
 
   methods: {
-    setRecordData() {
+    /*  setRecordData() {
       this.recordData = recordData;
     },
     setPdfUrl() {
@@ -15,7 +15,7 @@ export default {
     },
     setStartPage() {
       this.startPage = 0;
-    }
+    }*/
   },
 
   render(h) {
