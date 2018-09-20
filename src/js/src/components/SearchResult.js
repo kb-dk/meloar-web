@@ -12,6 +12,18 @@ export default {
     }
   },
   render(h) {
-    return <router-link to={this.getRecordLink(this.result.id)}>See more.</router-link>;
+    return (
+      <div>
+        <div>{this.result.title}</div>
+
+        {this.result.highLightSnippets.map(snippet => (
+          <ul>
+            <li>{snippet}</li>
+          </ul>
+        ))}
+
+        <router-link to={this.getRecordLink(this.result.id)}>See more.</router-link>
+      </div>
+    );
   }
 };
