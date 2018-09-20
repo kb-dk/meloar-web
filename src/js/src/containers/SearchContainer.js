@@ -9,7 +9,6 @@ export default {
   data: () => ({ searchResult: [], query: searchState.query }),
 
   render(h) {
-    console.log("render is called");
     return (
       <div class="searchContainer">
         <SearchBox class="notFrontpage" />
@@ -21,7 +20,6 @@ export default {
 
   methods: {
     setSearchResult(searchResult) {
-      console.log(searchResult);
       this.searchResult = searchResult;
     },
     setQuery(query) {
@@ -45,7 +43,6 @@ export default {
   beforeRouteEnter(to, from, next) {
     const searchResult = search("*.*");
     search("*.*").then(searchResult => {
-      console.log(searchResult);
       next(vm => {
         vm.setSearchResult(vm.structureSearchResult(searchResult));
       });

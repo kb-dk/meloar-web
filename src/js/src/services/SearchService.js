@@ -4,8 +4,7 @@ import axios from "axios";
 export function search(query) {
   const searchUrl = "/api/search?q=" + query;
   return axios.get(searchUrl).then(response => {
-    console.log(response.data);
-    //storeSearchResult(response.data.response.docs);
+    storeSearchResult(response.data);
     return response.data;
   });
 }
