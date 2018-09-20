@@ -1,20 +1,17 @@
 import cache from "./cacheStore.js";
 export function storeSearchResult(result) {
-  console.log(this);
-  const dataObj = structureSearchResultForCache(result);
-  if (!isResultStored(result.id)) {
-    cache.searchCache[result.id] = dataObj[id];
-  }
-}
-
-function isResultStored(id) {
-  console.log("is in cache?", id in cache.searchCache);
-  return result in cache.searchCache ? true : false;
-}
-function structureSearchResultForCache(result) {
   let dataObjReadyForCache = {};
-  for (let id in result) {
-    dataObjReadyForCache[id] = result;
+  for (let i = 0; i < result.response.docs.length; i++) {
+    if (!isResultStored(result.response.docs[i].id)) {
+      dataObjReadyForCache = {
+        doc: result.response.docs[i],
+        highLightSnippets: result.highlighting[result.response.docs[i].id]
+      };
+      cache.searchCache[result.response.docs[i].id] = dataObjReadyForCache;
+    }
   }
-  return dataObjReadyForCache;
+  console.log("cacheDump", cache.searchCache);
+}
+function isResultStored(id) {
+  return id in cache.searchCache ? true : false;
 }
