@@ -1,34 +1,41 @@
 import RecordMetadata from "../components/fullRecord/RecordMetadata.js";
 import PdfDocument from "../components/fullRecord/PdfDocument.js";
+import router from "../router/index.js";
 
 export default {
   name: "FullRecordContainer",
 
-  data: () => ({ recordData: {}, pdfUrl: "", startPage: 0 }),
+  data: () => ({ recordData: "", pdfUrl: "", startPage: 0, rd: "" }),
 
   methods: {
-    /*  setRecordData() {
-      this.recordData = recordData;
+    setRecordData(rd) {
+      this.recordData = rd;
     },
-    setPdfUrl() {
+    setPdfUrl(pdfUrl) {
       this.pdfUrl = pdfUrl;
     },
     setStartPage() {
       this.startPage = 0;
-    }*/
+    },
+
+    setId(id) {
+      this.id = id;
+    }
   },
 
   render(h) {
-    <div>
-      { $route.params.id }
-      Here!
-      <RecordMetadata recordData={this.recordData} />
+    return (
       <div>
-        <PdfDocument pdfUrl={this.pdfUrl} startPage={this.startPage} />
+        {this.recordData}
+        Here!
+        <RecordMetadata recordData={this.recordData} />
+        <div />
       </div>
-    </div>;
+    );
   },
   beforeRouteEnter(to, from, next) {
-    console.log("I came here!");
+    next(vm => {
+      vm.setId(to.params.id);
+    });
   }
 };
