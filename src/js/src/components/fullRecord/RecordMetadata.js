@@ -22,8 +22,6 @@ export default {
   },
 
   render(h) {
-    console.log(this.record.doc);
-
     return (
       <div>
         <div>ID: {this.getId()}</div>
