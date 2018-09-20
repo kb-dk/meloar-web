@@ -9,7 +9,6 @@ export default {
   data: () => ({ searchResult: [], query: searchState.query }),
 
   render(h) {
-    console.log("render is called");
     return (
       <div class="searchContainer">
         <SearchBox placeholder={this.query} class="notFrontpage" />
@@ -24,15 +23,33 @@ export default {
     },
     setQuery(query) {
       this.searchResult = searchResult;
+    },
+
+    structureSearchResult(searchResults) {
+      let highLights = [];
+      let results = [];
+      for (let i = 0; i < searchResults.response.docs.length; i++) {
+        const highLightsBlock =
+          searchResults.highlighting[searchResults.response.docs[i].id].content;
+        highLights = highLightsBlock ? highLightsBlock : [];
+        searchResults.response.docs[i].highLightSnippets = highLights;
+        results.push(searchResults.response.docs[i]);
+      }
+      return results;
     }
   },
 
   beforeRouteEnter(to, from, next) {
+<<<<<<< HEAD
     const searchResult = search("botanisk");
     search("botanisk").then(searchResult => {
       console.log(searchResult);
+=======
+    const searchResult = search("*.*");
+    search("*.*").then(searchResult => {
+>>>>>>> f52937aa33ee0e8081afdffe4f8082d34c46eb6c
       next(vm => {
-        vm.setSearchResult(searchResult);
+        vm.setSearchResult(vm.structureSearchResult(searchResult));
       });
     });
   }

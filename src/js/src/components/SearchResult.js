@@ -23,6 +23,7 @@ export default {
   },
   render(h) {
     return (
+<<<<<<< HEAD
       <div class="searchResult">
         <div>
           <div class="resultTitle">{this.result.title}</div>
@@ -35,6 +36,17 @@ export default {
           <div class="title" />
           <div class="">{this.result.chapter}</div>
         </div>
+=======
+      <div>
+        <div>{this.result.title}</div>
+
+        {this.result.highLightSnippets.map(snippet => (
+          <ul>
+            <li>{snippet}</li>
+          </ul>
+        ))}
+
+>>>>>>> f52937aa33ee0e8081afdffe4f8082d34c46eb6c
         <router-link to={this.getRecordLink(this.result.id)}>See more.</router-link>
       </div>
     );
