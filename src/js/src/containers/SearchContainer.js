@@ -3,7 +3,6 @@ import { search } from "../services/SearchService.js";
 import SearchResults from "../components/SearchResults.js";
 import SearchBox from "../components/SearchBox";
 
-
 export default {
   name: "SearchContainer",
 
@@ -13,7 +12,7 @@ export default {
     console.log("render is called");
     return (
       <div class="searchContainer">
-      <SearchBox class="notFrontpage" />
+        <SearchBox class="notFrontpage" />
         <SearchResults searchResults={this.searchResult} />
         <div>{this.query}</div>
       </div>
