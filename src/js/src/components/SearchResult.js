@@ -13,14 +13,31 @@ export default {
   },
   render(h) {
     return (
-      <div>
-        <div class="searchResultChapter">{this.result.chapter && this.result.chapter}</div>
-        {/*Rememeber this should loop when we go live*/}
-        <div class="searchResultChapter">{this.result.content[0]}</div>
-        <div class="searchResultChapter">
-          {this.result.external_resource && this.result.external_resource}
+      <div class="searchResult">
+        <div>
+          <div class="title">Author:</div>
+          {this.result.author.map(function(name, i, arr) {
+            if (arr.length - 1 === i) {
+              return <div class="author">{name}</div>;
+            } else {
+              return <div class="author">{name},</div>;
+            }
+          })}
         </div>
-        <router-link to={this.getRecordLink(this.result.id)}>Moar</router-link>
+        <div>
+          <div class="title">Chapter:</div>
+          <div class="chapter">{this.result.chapter}</div>
+        </div>
+        <div>
+          <div class="title">Content:</div>
+          <div class="content">{this.result.content[0]}</div>
+        </div>
+        <div>
+          <div class="title">Ressource:</div>
+          <div class="external_ressource">{this.result.external_resource}</div>
+        </div>
+
+        <router-link to="{this.result.id}">See more.</router-link>
       </div>
     );
   }
