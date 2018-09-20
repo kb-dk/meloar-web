@@ -10,6 +10,7 @@ export default {
   },
   render: (h, { props }) => (
     <div class="searchResults">
+      The following matches was found:
       {props.searchResults.map(result => (
         <SearchResult result={result} />
       ))}

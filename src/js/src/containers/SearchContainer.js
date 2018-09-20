@@ -12,13 +12,12 @@ export default {
     console.log("render is called");
     return (
       <div class="searchContainer">
-        <SearchBox class="notFrontpage" />
+        <SearchBox placeholder={this.query} class="notFrontpage" />
         <SearchResults searchResults={this.searchResult} />
         <div>{this.query}</div>
       </div>
     );
   },
-
   methods: {
     setSearchResult(searchResult) {
       this.searchResult = searchResult;
@@ -29,8 +28,8 @@ export default {
   },
 
   beforeRouteEnter(to, from, next) {
-    const searchResult = search("*.*");
-    search("*.*").then(searchResult => {
+    const searchResult = search("botanisk");
+    search("botanisk").then(searchResult => {
       console.log(searchResult);
       next(vm => {
         vm.setSearchResult(searchResult);
