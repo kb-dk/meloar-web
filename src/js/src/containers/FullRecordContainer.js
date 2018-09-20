@@ -20,8 +20,7 @@ export default {
 
   render(h) {
     <div>
-      { $route.params.id }
-      Here!
+        Here!
       <RecordMetadata recordData={this.recordData} />
       <div>
         <PdfDocument pdfUrl={this.pdfUrl} startPage={this.startPage} />
