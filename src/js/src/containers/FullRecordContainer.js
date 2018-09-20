@@ -5,7 +5,7 @@ import router from "../router/index.js";
 export default {
   name: "FullRecordContainer",
 
-  data: () => ({ recordData: "", pdfUrl: "", startPage: 0, rd: "" }),
+  data: () => ({ recordData: "", pdfUrl: "", startPage: 0, id: "" }),
 
   methods: {
     setRecordData(rd) {
@@ -26,7 +26,7 @@ export default {
   render(h) {
     return (
       <div>
-        {this.recordData}
+        {this.id}
         Here!
         <RecordMetadata recordData={this.recordData} />
         <div />
