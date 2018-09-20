@@ -21,10 +21,24 @@ export default {
 
   methods: {
     setSearchResult(searchResult) {
+      console.log(searchResult);
       this.searchResult = searchResult;
     },
     setQuery(query) {
       this.searchResult = searchResult;
+    },
+
+    structureSearchResult(searchResults) {
+      let highLights = [];
+      let results = [];
+      for (let i = 0; i < searchResults.response.docs.length; i++) {
+        const highLightsBlock =
+          searchResults.highlighting[searchResults.response.docs[i].id].content;
+        highLights = highLightsBlock ? highLightsBlock : [];
+        searchResults.response.docs[i].highLightSnippets = highLights;
+        results.push(searchResults.response.docs[i]);
+      }
+      return results;
     }
   },
 
@@ -33,7 +47,7 @@ export default {
     search("*.*").then(searchResult => {
       console.log(searchResult);
       next(vm => {
-        vm.setSearchResult(searchResult);
+        vm.setSearchResult(vm.structureSearchResult(searchResult));
       });
     });
   }
