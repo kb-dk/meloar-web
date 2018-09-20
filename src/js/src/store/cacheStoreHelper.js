@@ -10,8 +10,8 @@ export function storeSearchResult(result) {
       cache.searchCache[result.response.docs[i].id] = dataObjReadyForCache;
     }
   }
-  console.log("cacheDump", cache.searchCache);
+  //console.log("cacheDump", cache.searchCache);
 }
-function isResultStored(id) {
+export function isResultStored(id) {
   return id in cache.searchCache ? true : false;
 }
