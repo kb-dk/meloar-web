@@ -28,26 +28,24 @@ export default {
     structureSearchResult(searchResults) {
       let highLights = [];
       let results = [];
-      for (let i = 0; i < searchResults.response.docs.length; i++) {
-        const highLightsBlock =
-          searchResults.highlighting[searchResults.response.docs[i].id].content;
-        highLights = highLightsBlock ? highLightsBlock : [];
-        searchResults.response.docs[i].highLightSnippets = highLights;
-        results.push(searchResults.response.docs[i]);
+      for (let i = 0; i < searchResults.grouped.loar_id.groups.length; i++) {
+        for (let o = 0; o < searchResults.grouped.loar_id.groups[i].doclist.docs.length; o++) {
+          const highLightsBlock =
+            searchResults.highlighting[searchResults.grouped.loar_id.groups[i].doclist.docs[o].id].content;
+          highLights = highLightsBlock ? highLightsBlock : [];
+          searchResults.grouped.loar_id.groups[i].doclist.docs[o].highLightSnippets = highLights;
+        }
+        results.push(searchResults.grouped.loar_id.groups[i]);
       }
+      console.log("RESULTS");
+      console.log(results);
       return results;
     }
   },
 
   beforeRouteEnter(to, from, next) {
-<<<<<<< HEAD
     const searchResult = search("botanisk");
     search("botanisk").then(searchResult => {
-      console.log(searchResult);
-=======
-    const searchResult = search("*.*");
-    search("*.*").then(searchResult => {
->>>>>>> f52937aa33ee0e8081afdffe4f8082d34c46eb6c
       next(vm => {
         vm.setSearchResult(vm.structureSearchResult(searchResult));
       });
