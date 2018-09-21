@@ -1,44 +1,57 @@
+import PDFPage from "./PdfPage.js";
+import range from "lodash/range";
+
 export default {
   name: "pdfDocument",
 
   props: {
-    pdfUrl: {
-      type: String,
+    record: {
+      type: Object,
       required: true
-    },
-
-    startPage: {
-      type: Number,
-      required: false
     }
   },
 
-  data: () => ({ pages: [], pdf: {}, scale: 2 }),
+  data: () => ({ pdf: undefined, pages: [] }),
 
   created() {
     this.fetchPDF();
   },
 
   methods: {
-    setPdf(pdf) {
-      this.pdf = pdf;
+    getPdfUrl: function() {
+      console.log(this.record.doc ? this.record.doc.loar_resource[0] : "");
+      //return this.record.doc ? this.record.doc.loar_resource[0] : "";
+      return "/api/pdf";
     },
-    setPages(pages) {
+
+    getScale: function() {
+      return 2;
+    },
+
+    setPages: function(pages) {
       this.pages = pages;
+    },
+
+    setPdf: function(pdf) {
+      this.pdf = pdf;
     },
 
     fetchPDF() {
       //On the fly importing of pdfjs
       import("pdfjs-dist/webpack")
-        .then(pdfjs => pdfjs.getDocument(this.pdfUrl))
+        .then(pdfjs => pdfjs.getDocument(this.getPdfUrl()))
         .then(pdf => this.setPdf(pdf));
     }
   },
 
   render(h) {
-    <div class="pdfDoc">
-      <PDFPage pages={this.pages} scale={this.scale} />
-    </div>;
+    return (
+      <div class="pdfDoc">
+        {this.pages.map(page => (
+          <PDFPage page={page} scale={this.scale} />
+        ))}
+      </div>
+    );
   },
 
   watch: {
@@ -47,6 +60,7 @@ export default {
       const promises = range(1, pdf.numPages).map(number => pdf.getPage(number));
 
       Promise.all(promises).then(pages => this.setPages(pages));
+      console.log("all pdf pages set!!!");
     }
   }
 };
