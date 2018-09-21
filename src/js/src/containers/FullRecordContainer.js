@@ -1,14 +1,16 @@
-import RecordMetadata from "../components/fullRecord/RecordMetadata.js";
-import PdfDocument from "../components/fullRecord/PdfDocument.js";
-import router from "../router/index.js";
+import RecordMetaData from "../components/fullRecord/RecordMetadata.js";
+
+import { isResultStored } from "../store/cacheStoreHelper.js";
+import cache from "../store/cacheStore.js";
 
 export default {
   name: "FullRecordContainer",
 
-  data: () => ({ recordData: "", pdfUrl: "", startPage: 0, id: "" }),
+  data: () => ({ recordData: {}, pdfUrl: "", startPage: 0, id: "" }),
 
   methods: {
     setRecordData(rd) {
+      console.log("rd1", rd);
       this.recordData = rd;
     },
     setPdfUrl(pdfUrl) {
@@ -26,15 +28,16 @@ export default {
   render(h) {
     return (
       <div>
-        {this.id}
-        Here!
-        <RecordMetadata recordData={this.recordData} />
+        <RecordMetaData record={this.recordData} />
         <div />
       </div>
     );
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
+      if (isResultStored(to.params.id)) {
+        vm.setRecordData(cache.searchCache[to.params.id]);
+      }
       vm.setId(to.params.id);
     });
   }
