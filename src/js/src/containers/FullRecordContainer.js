@@ -1,4 +1,5 @@
 import RecordMetaData from "../components/fullRecord/RecordMetadata.js";
+import PDFDocument from "../components/fullRecord/PdfDocument.js";
 
 import { isResultStored } from "../store/cacheStoreHelper.js";
 import cache from "../store/cacheStore.js";
@@ -10,7 +11,7 @@ export default {
 
   methods: {
     setRecordData(rd) {
-      console.log("rd1", rd);
+      console.log(rd.doc);
       this.recordData = rd;
     },
     setPdfUrl(pdfUrl) {
@@ -29,7 +30,7 @@ export default {
     return (
       <div>
         <RecordMetaData record={this.recordData} />
-        <div />
+        <PDFDocument record={this.recordData} />
       </div>
     );
   },
