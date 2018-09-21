@@ -25,10 +25,11 @@ export default {
       this.searchResult = searchResult;
     },
 
-    structureSearchResult(searchResults) {
+    structureSearchResult(searchResults, query) {
       let highLights = [];
       let results = [];
       for (let i = 0; i < searchResults.grouped.loar_id.groups.length; i++) {
+        searchResults.grouped.loar_id.groups[i].query = searchResults.responseHeader.params.q;
         for (let o = 0; o < searchResults.grouped.loar_id.groups[i].doclist.docs.length; o++) {
           const highLightsBlock =
             searchResults.highlighting[searchResults.grouped.loar_id.groups[i].doclist.docs[o].id].content;
