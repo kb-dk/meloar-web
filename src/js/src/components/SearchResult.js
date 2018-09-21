@@ -42,7 +42,7 @@ export default {
             <li>{snippet}</li>
           </ul>
         ))}
-        <router-link to={this.getRecordLink(this.result.id)}>See more.</router-link>
+        <router-link to={this.getRecordLink(this.result.doclist.docs["0"].id)}>See more.</router-link>
       </div>
     );
   }
