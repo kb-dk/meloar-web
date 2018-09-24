@@ -25,7 +25,7 @@ export default {
     },
     splitAndHighlightWordInSnippet(array) {
       var query = this.result.query;
-      console.log(array);
+      // console.log(array);
       return array;
     },
     splitAndHighlightWordInChapter(string) {
@@ -34,8 +34,8 @@ export default {
     }
   },
   render(h) {
-    console.log("INDIVIDUAL SEARCH DATA");
-    console.log(this.result);
+    //console.log("INDIVIDUAL SEARCH DATA");
+    //console.log(this.result);
     return (
       <div class="searchResult">
         <div class="generalInfo">
@@ -47,8 +47,8 @@ export default {
             {this.result.doclist.docs["0"].title}
           </div>
           <div class="resultDate">
-            From approx <span>{this.transformDate(this.result.doclist.docs["0"].ctime)}</span> years ago (
-            {this.deliverTimeBetween(this.result.doclist.docs["0"].ctime)})
+            From approx <span>{this.transformDate(this.result.doclist.docs["0"].ctime)}</span> years
+            ago ({this.deliverTimeBetween(this.result.doclist.docs["0"].ctime)})
           </div>
           <div class="matches">
             <span class="numbersFound">{this.result.doclist.numFound}</span> matches found in pdf
@@ -64,11 +64,16 @@ export default {
             <HighlightedChapter chapterString={snippets.chapter} query={this.result.query} />
             <ul>
               {/* <li>{this.splitAndHighlightWordInSnippet(snippets.highLightSnippets)}</li> */}
-              <HighlightedContent contentArray={snippets.highLightSnippets} query={this.result.query} />
+              <HighlightedContent
+                contentArray={snippets.highLightSnippets}
+                query={this.result.query}
+              />
             </ul>
           </div>
         ))}
-        <router-link to={this.getRecordLink(this.result.doclist.docs["0"].id)}>See pdf.</router-link>
+        <router-link to={this.getRecordLink(this.result.doclist.docs["0"].id)}>
+          See pdf.
+        </router-link>
       </div>
     );
   }
