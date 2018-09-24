@@ -1,80 +1,61 @@
+import PdfPage from "./PdfPage.js";
+import PdfPreview from "./PdfPreview.js";
 import range from "lodash/range";
-import pdfjs from "pdfjs-dist";
 
 export default {
-  name: "pdfDocument",
+  name: "PdfDocument",
+  //...
+  data: () => ({ pdf: undefined, pages: [], primaryPageNum: 0 }),
+
+  created() {
+    this.fetchPDF();
+  },
 
   props: {
     record: {
-      type: Object,
-      required: true
+      type: Object
     }
   },
 
   methods: {
-    getPdfUrl: function() {
-      console.log(this.record.doc ? this.record.doc.loar_resource[0] : "");
-      //return "/api/pdf/" + (this.record.doc ? this.record.doc.external_resource[0] : "");
-      return "/api/pdf";
+    fetchPDF() {
+      import("pdfjs-dist/webpack")
+        .then(pdfjs => pdfjs.getDocument("/api/pdf"))
+        .then(pdf => (this.pdf = pdf));
     },
 
-    getPage: function() {
-      return this.record.doc ? this.record.doc.page : "";
-    },
-
-    showPdf: function() {},
-
-    setPages: function(pages) {
-      this.pages = pages;
+    getPage(pageNumber) {
+      return this.pages[pageNumber];
     }
   },
 
   render(h) {
-    return <div class="pdf">{renderPdf(this.getPage(), this.getPdfUrl())}</div>;
+    return (
+      <div>
+        <div class="pdfDocumentView">
+          {this.pages.map((page, index) => (
+            <div>
+              {this.$props.record.doc.page[0] - 1 === index && (
+                <PdfPage class="pdf-document" page={page} scale={3} />
+              )}
+            </div>
+          ))}
+          ;
+        </div>
+        <div class="pdfPreviewPane">
+          {this.pages.map(page => (
+            <PdfPreview class="pdfPreview" page={page} scale={1} />
+          ))}
+        </div>
+      </div>
+    );
+  },
+
+  watch: {
+    pdf(pdf) {
+      this.pages = [];
+      const promises = range(1, pdf.numPages).map(number => pdf.getPage(number));
+      Promise.all(promises).then(pages => (this.pages = pages));
+    }
   }
 };
-
-function renderPdf(pageNumber, pdfUrl) {
-  // If absolute URL from the remote server is provided, configure the CORS
-  // header on that server.
-  //var url = "//cdn.mozilla.net/pdfjs/helloworld.pdf";
-  var url = "/api/pdf";
-
-  // Asynchronous download of PDF
-  var loadingTask = pdfjs.getDocument(url);
-  loadingTask.promise.then(
-    function(pdf) {
-      console.log("PDF loaded");
-
-      // Fetch the first page
-      var pageNumber = 1;
-      pdf.getPage(pageNumber).then(function(page) {
-        console.log("Page loaded");
-
-        var scale = 1.5;
-        var viewport = page.getViewport(scale);
-
-        // Prepare canvas using PDF page dimensions
-        var canvas = document.createElement("canvas");
-        var context = canvas.getContext("2d");
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-
-        // Render PDF page into canvas context
-        var renderContext = {
-          canvasContext: context,
-          viewport: viewport
-        };
-        var renderTask = page.render(renderContext);
-        renderTask.then(function() {
-          console.log("Page rendered");
-          document.body.appendChild(canvas);
-        });
-      });
-    },
-    function(reason) {
-      // PDF loading error
-      console.error(reason);
-    }
-  );
-}

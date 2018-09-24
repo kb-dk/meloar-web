@@ -17,10 +17,10 @@ module.exports = {
         changeOrigin: true
       },
       "/api/pdf": {
-        target:
-          "https://www.statsbiblioteket.dk/om-statsbiblioteket/Pressemeddelelse_Enestendesamlingafdanskeaviserfylder100.pdf",
+        target: "http://www.kulturarv.dk/fundogfortidsminder/resource/132470",
         pathRewrite: { "^/api/pdf": "" },
-        changeOrigin: true
+        changeOrigin: true,
+        logLevel: "debug"
       }
     },
 
