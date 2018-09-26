@@ -101,26 +101,32 @@
   margin-top: 1em;
   margin-bottom: 1em;
   background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 25px;
+  border-radius: 10px;
   padding: 1em;
 }
 
 .resultTitle {
-  font-size: 150%;
+  font-size: 200%;
   display: inline-block;
   text-transform: uppercase;
 }
 
-.resultDate {
+.resultInfo {
   text-transform: uppercase;
-  font-size: 75%;
+  font-size: 69%;
   vertical-align: top;
-  padding-top: 9px;
+  padding-top: 12px;
   margin-left: 15px;
   color: rgba(30, 30, 30, 0.5);
 }
 
-.resultDate span {
+.resultPlace {
+  display: block !important;
+  top: -11px;
+  position: relative;
+}
+
+.resultInfo span {
   font-weight: bold;
   color: rgba(30, 30, 30, 0.7);
 }
@@ -128,6 +134,7 @@
 .searchResult div {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
+  border-radius: 10px;
 }
 
 .searchResult div div {
@@ -192,4 +199,35 @@
   //color: rgba(30, 30, 30, 0.5);
   font-weight: bold;
   border-bottom: 1px solid rgba(16, 255, 235, 0.493);
+}
+
+.renderedSnippet {
+  display: block !important;
+  font-style: italic;
+}
+
+.renderedSnippet ul li {
+  display: inline-block;
+}
+
+.renderedSnippet ul::before {
+  content: "“";
+  margin-right: 5px;
+  margin-left: 5px;
+  display: inline-block;
+}
+
+.renderedSnippet ul::after {
+  content: "”";
+  margin-left: 5px;
+  margin-right: 5px;
+  display: inline-block;
+}
+
+.renderedSnippet .empty {
+  display: none;
+}
+
+.authorContainer {
+  display: block !important;
 }
