@@ -25,8 +25,9 @@ export default {
     }
   },
   render(h) {
-    console.log("INDIVIDUAL SEARCH DATA");
-    console.log(this.result);
+    //console.log("INDIVIDUAL SEARCH DATA");
+    //console.log(this.result);
+    let authors = this.result.doclist.docs["0"].author || ["Unknown"];
     return (
       <div class="searchResult">
         <div class="generalInfo">
@@ -48,7 +49,7 @@ export default {
           </div>
           <div class="authorContainer">
             <div class="authorTitle">Authors:&nbsp;</div>
-            {this.result.doclist.docs["0"].author.map(function(name, i, arr) {
+            {authors.map(function(name, i, arr) {
               if (arr.length - 1 === i) {
                 return <div class="authorName">{name}</div>;
               } else {
@@ -74,7 +75,9 @@ export default {
           <div class="snippet">
             <h5 class="chapterTitle">chapter:</h5>
             <HighlightedChapter chapterString={snippets.chapter} query={this.result.query} />
-            <HighlightedContent contentArray={snippets.highLightSnippets} query={this.result.query} />
+            <ul>
+              <HighlightedContent contentArray={snippets.highLightSnippets} query={this.result.query} />
+            </ul>
           </div>
         ))}
         <router-link to={this.getRecordLink(this.result.doclist.docs["0"].id)}>See pdf.</router-link>

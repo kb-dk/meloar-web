@@ -30,7 +30,7 @@ export default {
     return (
       <div>
         <RecordMetaData record={this.recordData} />
-        <PDFDocument record={this.recordData} />
+        <PDFDocument class="pdf-document" record={this.recordData} />
       </div>
     );
   },

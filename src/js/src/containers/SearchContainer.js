@@ -32,7 +32,8 @@ export default {
         searchResults.grouped.loar_id.groups[i].query = searchResults.responseHeader.params.q;
         for (let o = 0; o < searchResults.grouped.loar_id.groups[i].doclist.docs.length; o++) {
           const highLightsBlock =
-            searchResults.highlighting[searchResults.grouped.loar_id.groups[i].doclist.docs[o].id].content;
+            searchResults.highlighting[searchResults.grouped.loar_id.groups[i].doclist.docs[o].id]
+              .content;
           highLights = highLightsBlock ? highLightsBlock : [];
           searchResults.grouped.loar_id.groups[i].doclist.docs[o].highLightSnippets = highLights;
         }
@@ -45,11 +46,27 @@ export default {
   },
 
   beforeRouteEnter(to, from, next) {
-    const searchResult = search("botanisk");
-    search("botanisk").then(searchResult => {
+    console.log(searchState.query);
+    search(searchState.query).then(searchResult => {
       next(vm => {
         vm.setSearchResult(vm.structureSearchResult(searchResult));
       });
     });
+  },
+
+  beforeRouteUpdate(to, from, next) {
+    if (checkForSearchChange(to, from)) {
+      search(to.params.query).then(searchResult => {
+        searchState.query = to.params.query;
+        this.setSearchResult(this.structureSearchResult(searchResult));
+        next();
+      });
+    } else {
+      next();
+    }
   }
 };
+
+function checkForSearchChange(to, from) {
+  return to.params.query !== from.params.query;
+}
