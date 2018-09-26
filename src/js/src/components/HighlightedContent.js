@@ -33,7 +33,6 @@ export default {
 
   render(h) {
     const isEmpty = this.isArrayEmpty(this.contentArray);
-    console.log(isEmpty);
     return (
       <div class="renderedSnippet">
         {isEmpty === true ? (
