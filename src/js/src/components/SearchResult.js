@@ -22,15 +22,6 @@ export default {
     deliverTimeBetween(date) {
       const convertedDate = new Date(date);
       return convertedDate.getFullYear();
-    },
-    splitAndHighlightWordInSnippet(array) {
-      var query = this.result.query;
-      console.log(array);
-      return array;
-    },
-    splitAndHighlightWordInChapter(string) {
-      var query = this.result.query;
-      return string;
     }
   },
   render(h) {
@@ -46,12 +37,33 @@ export default {
             </div>
             {this.result.doclist.docs["0"].title}
           </div>
-          <div class="resultDate">
-            From approx <span>{this.transformDate(this.result.doclist.docs["0"].ctime)}</span> years ago (
-            {this.deliverTimeBetween(this.result.doclist.docs["0"].ctime)})
+          <div class="resultInfo">
+            <div resultDate>
+              From approx <span>{this.transformDate(this.result.doclist.docs["0"].ctime)}</span> years ago (
+              {this.deliverTimeBetween(this.result.doclist.docs["0"].ctime)})
+            </div>
+            <div class="resultPlace">
+              At <span>{this.result.doclist.docs["0"].place_name}</span>
+            </div>
+          </div>
+          <div class="authorContainer">
+            <div class="authorTitle">Authors:&nbsp;</div>
+            {this.result.doclist.docs["0"].author.map(function(name, i, arr) {
+              if (arr.length - 1 === i) {
+                return <div class="authorName">{name}</div>;
+              } else {
+                return (
+                  <div class="authorName">
+                    {name}
+                    ,&nbsp;
+                  </div>
+                );
+              }
+            })}
           </div>
           <div class="matches">
-            <span class="numbersFound">{this.result.doclist.numFound}</span> matches found in pdf
+            <span class="numbersFound">{this.result.doclist.numFound}</span>{" "}
+            {this.result.doclist.numFound > 1 ? <span>matches</span> : <span>match</span>} found in pdf
           </div>
         </div>
         <div>
@@ -62,10 +74,7 @@ export default {
           <div class="snippet">
             <h5 class="chapterTitle">chapter:</h5>
             <HighlightedChapter chapterString={snippets.chapter} query={this.result.query} />
-            <ul>
-              {/* <li>{this.splitAndHighlightWordInSnippet(snippets.highLightSnippets)}</li> */}
-              <HighlightedContent contentArray={snippets.highLightSnippets} query={this.result.query} />
-            </ul>
+            <HighlightedContent contentArray={snippets.highLightSnippets} query={this.result.query} />
           </div>
         ))}
         <router-link to={this.getRecordLink(this.result.doclist.docs["0"].id)}>See pdf.</router-link>

@@ -16,6 +16,9 @@ export default {
 
   methods: {
     highlightString(arg, query) {
+      if (arg === "null") {
+        return "Unknown";
+      }
       return arg.replace(new RegExp(query, "ig"), match => {
         return '<span class="highlightText">' + match + "</span>";
       });
@@ -23,6 +26,6 @@ export default {
   },
 
   render(h) {
-    return <div class="string" domPropsInnerHTML={this.highlightString(this.chapterString, this.query)} />;
+    return <h5 class="chapterName" domPropsInnerHTML={this.highlightString(this.chapterString, this.query)} />;
   }
 };

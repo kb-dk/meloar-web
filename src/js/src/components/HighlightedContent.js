@@ -21,10 +21,29 @@ export default {
           return '<span class="highlightText">' + match + "</span>";
         });
       }
+    },
+    isArrayEmpty(arg) {
+      if (arg.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
 
   render(h) {
-    return <li class="string" domPropsInnerHTML={this.highlightStrings(this.contentArray, this.query)} />;
+    const isEmpty = this.isArrayEmpty(this.contentArray);
+    console.log(isEmpty);
+    return (
+      <div class="renderedSnippet">
+        {isEmpty === true ? (
+          <ul>
+            <li class="string" domPropsInnerHTML={this.highlightStrings(this.contentArray, this.query)} />
+          </ul>
+        ) : (
+          <div class="empty" />
+        )}
+      </div>
+    );
   }
 };
