@@ -6,13 +6,13 @@ import SearchBox from "../components/SearchBox";
 export default {
   name: "SearchContainer",
 
-  data: () => ({ searchResult: [], query: searchState.query }),
+  data: () => ({ searchResult: [], query: searchState.query, facets: {} }),
 
   render(h) {
     return (
       <div class="searchContainer">
         <SearchBox placeholder={this.query} class="notFrontpage" />
-        <SearchResults searchResults={this.searchResult} />
+        <SearchResults searchResults={this.searchResult} facets={this.facets} />
         <div>{this.query}</div>
       </div>
     );
@@ -21,19 +21,17 @@ export default {
     setSearchResult(searchResult) {
       this.searchResult = searchResult;
     },
-    setQuery(query) {
-      this.searchResult = searchResult;
+    setFacets(facets) {
+      this.facets = facets;
     },
-
-    structureSearchResult(searchResults, query) {
+    structureSearchResult(searchResults) {
       let highLights = [];
       let results = [];
       for (let i = 0; i < searchResults.grouped.loar_id.groups.length; i++) {
         searchResults.grouped.loar_id.groups[i].query = searchResults.responseHeader.params.q;
         for (let o = 0; o < searchResults.grouped.loar_id.groups[i].doclist.docs.length; o++) {
           const highLightsBlock =
-            searchResults.highlighting[searchResults.grouped.loar_id.groups[i].doclist.docs[o].id]
-              .content;
+            searchResults.highlighting[searchResults.grouped.loar_id.groups[i].doclist.docs[o].id].content;
           highLights = highLightsBlock ? highLightsBlock : [];
           searchResults.grouped.loar_id.groups[i].doclist.docs[o].highLightSnippets = highLights;
         }
@@ -42,6 +40,10 @@ export default {
       console.log("RESULTS");
       console.log(results);
       return results;
+    },
+    getFacets(searchResults) {
+      let facets = JSON.parse(JSON.stringify(searchResults.facet_counts.facet_fields));
+      return facets;
     }
   },
 
@@ -50,6 +52,7 @@ export default {
     search(searchState.query).then(searchResult => {
       next(vm => {
         vm.setSearchResult(vm.structureSearchResult(searchResult));
+        vm.setFacets(vm.getFacets(searchResult));
       });
     });
   },
@@ -59,6 +62,7 @@ export default {
       search(to.params.query).then(searchResult => {
         searchState.query = to.params.query;
         this.setSearchResult(this.structureSearchResult(searchResult));
+        this.setFacets(this.getFacets(searchResult));
         next();
       });
     } else {
