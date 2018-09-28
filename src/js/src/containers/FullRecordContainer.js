@@ -11,7 +11,11 @@ export default {
 
   methods: {
     setRecordData(rd) {
+<<<<<<< HEAD
       console.log(rd.doc);
+=======
+      console.log("rddoc", rd.doc);
+>>>>>>> 7848b7e0dd9591fd0b7c3a78a88badd1c1e547b5
       this.recordData = rd;
     },
     setPdfUrl(pdfUrl) {

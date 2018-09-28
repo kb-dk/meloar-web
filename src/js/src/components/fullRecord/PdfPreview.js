@@ -25,8 +25,11 @@ export default {
         canvas.width = 0;
         canvas.height = 0;
         this.pdfSrc = this.src;
+<<<<<<< HEAD
 
         //console.log(this);
+=======
+>>>>>>> 7848b7e0dd9591fd0b7c3a78a88badd1c1e547b5
       });
     },
 
