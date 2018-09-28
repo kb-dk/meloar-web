@@ -78,9 +78,10 @@ export default {
             <ul>
               <HighlightedContent contentArray={snippets.highLightSnippets} query={this.result.query} />
             </ul>
+            <router-link to={this.getRecordLink(snippets.id)}>Go to quote.</router-link>
           </div>
         ))}
-        <router-link to={this.getRecordLink(this.result.doclist.docs["0"].id)}>See pdf.</router-link>
+        <router-link to={this.getRecordLink(this.result.groupValue)}>See pdf.</router-link>
       </div>
     );
   }
