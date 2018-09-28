@@ -249,3 +249,40 @@
   width: 80%;
   float: right;
 }
+
+.facet {
+  width: 25%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.facets {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  padding: 1em;
+}
+
+.facets .facet .facetHitNumber,
+.facets .facet .facetItem {
+  margin-top: 5px;
+}
+
+.facets .facet .facetItem {
+  float: left;
+  margin-right: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 85%;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.facets .facet .facetHitNumber {
+  color: rgba(30, 30, 30, 0.5);
+}
+
+.facetName {
+  font-weight: bold;
+}

@@ -13,7 +13,6 @@ export default {
       <div class="searchContainer">
         <SearchBox placeholder={this.query} class="notFrontpage" />
         <SearchResults searchResults={this.searchResult} facets={this.facets} />
-        <div>{this.query}</div>
       </div>
     );
   },
