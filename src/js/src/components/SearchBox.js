@@ -15,6 +15,7 @@ export default {
       <div class="searchbox">
         <form onSubmit={e => this.search(e)}>
           <input
+            size="16"
             type="text"
             placeholder="Type to search."
             value={this.searchState.query}
