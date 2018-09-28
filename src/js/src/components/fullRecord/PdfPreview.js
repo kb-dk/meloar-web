@@ -25,8 +25,6 @@ export default {
         canvas.width = 0;
         canvas.height = 0;
         this.pdfSrc = this.src;
-
-        //console.log(this);
       });
     },
 

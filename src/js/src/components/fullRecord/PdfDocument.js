@@ -12,16 +12,18 @@ export default {
   },
 
   props: {
-    record: {
-      type: Object
-    }
+    record: Object
   },
 
   methods: {
     fetchPDF() {
       import("pdfjs-dist/webpack")
-        .then(pdfjs => pdfjs.getDocument("/api/pdf"))
+        .then(pdfjs => pdfjs.getDocument(this.getUrl()))
         .then(pdf => (this.pdf = pdf));
+    },
+
+    getUrl() {
+      return "/api/pdf?url=" + this.record.doc.external_resource[0];
     },
 
     getPage(pageNumber) {
@@ -43,8 +45,8 @@ export default {
           ;
         </div>
         <div class="pdfPreviewPane">
-          {this.pages.map(page => (
-            <PdfPreview class="pdfPreview" page={page} scale={1} />
+          {this.pages.map((page, index) => (
+            <div>{index < 15 && <PdfPreview class="pdfPreview" page={page} scale={1} />}</div>
           ))}
         </div>
       </div>

@@ -11,7 +11,7 @@ export default {
 
   methods: {
     setRecordData(rd) {
-      console.log(rd.doc);
+      console.log("rddoc", rd.doc);
       this.recordData = rd;
     },
     setPdfUrl(pdfUrl) {
