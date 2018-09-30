@@ -1,5 +1,6 @@
 import HighlightedChapter from "../components/HighlightedChapter";
 import HighlightedContent from "../components/HighlightedContent";
+import ResultMap from "../components/ResultMap";
 
 export default {
   name: "SearchResult",
@@ -62,6 +63,10 @@ export default {
               }
             })}
           </div>
+          <ResultMap
+            id={this.result.doclist.docs["0"].id}
+            coordinates={this.result.doclist.docs["0"].place_coordinates}
+          />
           <div class="matches">
             <span class="numbersFound">{this.result.doclist.numFound}</span>{" "}
             {this.result.doclist.numFound > 1 ? <span>matches</span> : <span>match</span>} found in pdf
