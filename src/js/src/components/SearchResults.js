@@ -21,7 +21,7 @@ export default {
       console.log(props.props.searchResults["0"].query);
       router.push({
         name: "search",
-        params: { query: searchState.query + "&fq=" + key.key + ':"' + name.name + '"' }
+        params: { query: searchState.query + "&fq=" + key.key + ':"' + encodeURIComponent(name.name) + '"' }
       });
     }
   },
