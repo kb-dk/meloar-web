@@ -21,7 +21,7 @@ export default {
   methods: {
     createMap(coordinateSet, id) {
       if (coordinateSet === "Unknown" || undefined) {
-        document.getElementById(this.fixedId(id)).innerHTML = "No coordinates to show :(";
+        document.getElementById(this.fixedId(id)).innerHTML = "<div class='noShowMap'>No coordinates to show :(</div>";
       } else {
         var coordinates = coordinateSet.split(",").reverse();
         const L = require("leaflet");
