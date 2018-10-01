@@ -32,45 +32,46 @@ export default {
     return (
       <div class="searchResult">
         <div class="generalInfo">
-          <div class="resultTitle">
-            <div class="pdfTitle">
-              <span>pdf</span>
-              <span>title</span>
+          <div class="overallInfo">
+            <div class="resultTitle">
+              <div class="pdfTitle">pdf title</div>
+              <div class="pdfName">{this.result.doclist.docs["0"].title}</div>
             </div>
-            {this.result.doclist.docs["0"].title}
-          </div>
-          <div class="resultInfo">
-            <div resultDate>
+            <div class="resultInfo">Time</div>
+            <div class="timeTitle" />
+            <div class="resultDate">
               From approx <span>{this.transformDate(this.result.doclist.docs["0"].ctime)}</span> years ago (
               {this.deliverTimeBetween(this.result.doclist.docs["0"].ctime)})
             </div>
-            <div class="resultPlace">
-              At <span>{this.result.doclist.docs["0"].place_name}</span>
+            <div class="placeTitle">Place</div>
+            <div class="resultPlace">{this.result.doclist.docs["0"].place_name}</div>
+            <div class="authorContainer">
+              <div class="authorTitle">Authors:&nbsp;</div>
+              {authors.map(function(name, i, arr) {
+                if (arr.length - 1 === i) {
+                  return <div class="authorName">{name}</div>;
+                } else {
+                  return (
+                    <div class="authorName">
+                      {name}
+                      ,&nbsp;
+                    </div>
+                  );
+                }
+              })}
             </div>
           </div>
-          <div class="authorContainer">
-            <div class="authorTitle">Authors:&nbsp;</div>
-            {authors.map(function(name, i, arr) {
-              if (arr.length - 1 === i) {
-                return <div class="authorName">{name}</div>;
-              } else {
-                return (
-                  <div class="authorName">
-                    {name}
-                    ,&nbsp;
-                  </div>
-                );
-              }
-            })}
+          <div class="mapContainer">
+            <ResultMap
+              id={this.result.doclist.docs["0"].id}
+              coordinates={this.result.doclist.docs["0"].place_coordinates || "Unknown"}
+            />
           </div>
-          <ResultMap
-            id={this.result.doclist.docs["0"].id}
-            coordinates={this.result.doclist.docs["0"].place_coordinates}
-          />
-          <div class="matches">
-            <span class="numbersFound">{this.result.doclist.numFound}</span>{" "}
-            {this.result.doclist.numFound > 1 ? <span>matches</span> : <span>match</span>} found in pdf
-          </div>
+        </div>
+        <div class="matches">
+          <span class="numbersFound">{this.result.doclist.numFound}</span>{" "}
+          {this.result.doclist.numFound > 1 ? <span>matches</span> : <span>match</span>} found in pdf. Showing{" "}
+          <span class="numbersFound">{this.result.doclist.docs.length}</span>.
         </div>
         <div>
           <div class="title" />
@@ -78,15 +79,19 @@ export default {
         </div>
         {this.result.doclist.docs.map(snippets => (
           <div class="snippet">
-            <h5 class="chapterTitle">chapter:</h5>
-            <HighlightedChapter chapterString={snippets.chapter} query={this.result.query} />
+            <div class="chapterTitle">chapter </div>
+            <HighlightedChapter chapterString={snippets.chapter} query={this.result.query} />{" "}
+            <div class="pageTitle">page </div>{" "}
+            {snippets.page == 0 ? <div class="pageNumber">1</div> : <div class="pageNumber">{snippets.page - 1}</div>}
             <ul>
               <HighlightedContent contentArray={snippets.highLightSnippets} query={this.result.query} />
             </ul>
-            <router-link to={this.getRecordLink(snippets.id)}>Go to quote.</router-link>
+            <router-link to={this.getRecordLink(snippets.id)}>Go to hit</router-link>
           </div>
         ))}
-        <router-link to={this.getRecordLink(this.result.groupValue)}>See pdf.</router-link>
+        <router-link class="entirePdfLink" to={this.getRecordLink(this.result.doclist.docs["0"].id)}>
+          See entire pdf
+        </router-link>
       </div>
     );
   }

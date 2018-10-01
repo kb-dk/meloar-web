@@ -12,24 +12,12 @@ export default {
   },
 
   props: {
-<<<<<<< HEAD
-    record: {
-      type: Object
-    }
-=======
     record: Object
->>>>>>> 7848b7e0dd9591fd0b7c3a78a88badd1c1e547b5
   },
 
   methods: {
     fetchPDF() {
       import("pdfjs-dist/webpack")
-<<<<<<< HEAD
-        .then(pdfjs => pdfjs.getDocument("/api/pdf"))
-        .then(pdf => (this.pdf = pdf));
-    },
-
-=======
         .then(pdfjs => pdfjs.getDocument(this.getUrl()))
         .then(pdf => (this.pdf = pdf));
     },
@@ -38,7 +26,6 @@ export default {
       return "/api/pdf?url=" + this.record.doc.external_resource[0];
     },
 
->>>>>>> 7848b7e0dd9591fd0b7c3a78a88badd1c1e547b5
     getPage(pageNumber) {
       return this.pages[pageNumber];
     }
@@ -50,21 +37,17 @@ export default {
         <div class="pdfDocumentView">
           {this.pages.map((page, index) => (
             <div>
-              {this.$props.record.doc.page[0] - 1 === index && (
-                <PdfPage class="pdf-document" page={page} scale={3} />
-              )}
+              {this.$props.record.doc.page[0] === 0
+                ? this.$props.record.doc.page[0] === index && <PdfPage class="pdf-document" page={page} scale={3} />
+                : this.$props.record.doc.page[0] === index + 1 && (
+                    <PdfPage class="pdf-document" page={page} scale={3} />
+                  )}
             </div>
           ))}
-          ;
         </div>
         <div class="pdfPreviewPane">
-<<<<<<< HEAD
-          {this.pages.map(page => (
-            <PdfPreview class="pdfPreview" page={page} scale={1} />
-=======
           {this.pages.map((page, index) => (
             <div>{index < 15 && <PdfPreview class="pdfPreview" page={page} scale={1} />}</div>
->>>>>>> 7848b7e0dd9591fd0b7c3a78a88badd1c1e547b5
           ))}
         </div>
       </div>

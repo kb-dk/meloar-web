@@ -25,11 +25,6 @@ export default {
         canvas.width = 0;
         canvas.height = 0;
         this.pdfSrc = this.src;
-<<<<<<< HEAD
-
-        //console.log(this);
-=======
->>>>>>> 7848b7e0dd9591fd0b7c3a78a88badd1c1e547b5
       });
     },
 
@@ -79,9 +74,7 @@ export default {
     canvasStyle() {
       const { width: actualSizeWidth, height: actualSizeHeight } = this.actualSizeViewport;
       const pixelRatio = window.devicePixelRatio || 1;
-      const [pixelWidth, pixelHeight] = [actualSizeWidth, actualSizeHeight].map(dim =>
-        Math.ceil(dim / pixelRatio)
-      );
+      const [pixelWidth, pixelHeight] = [actualSizeWidth, actualSizeHeight].map(dim => Math.ceil(dim / pixelRatio));
       return `width: ${pixelWidth}px; height: ${pixelHeight}px;`;
     },
 

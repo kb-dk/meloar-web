@@ -33,28 +33,32 @@ export default {
         <div class="facets">
           {Object.keys(props.facets).map(function(key) {
             var item = props.facets[key];
-            return (
-              <div class="facet">
-                <div class="facetName">{key.split("_")[0]}</div>
-                {item.map(function(name, i) {
-                  if (i % 2 == 0) {
-                    return (
-                      <div
-                        onClick={e => this.a.methods.filterFromFacets({ name }, { key }, { props })}
-                        class="facetItem"
-                      >
-                        {name || "Unknown"}
-                      </div>
-                    );
-                  } else {
-                    return <div class="facetHitNumber">({name})</div>;
-                  }
-                }, this)}
-              </div>
-            );
+            if (Object.keys(props.facets).length > 1) {
+              return (
+                <div class="facet">
+                  <div class="facetName">{key.split("_")[0]}</div>
+                  {item.map(function(name, i) {
+                    if (i % 2 == 0) {
+                      return (
+                        <div
+                          onClick={e => this.a.methods.filterFromFacets({ name }, { key }, { props })}
+                          class="facetItem"
+                        >
+                          {name || "Unknown"}
+                        </div>
+                      );
+                    } else {
+                      return <div class="facetHitNumber">({name})</div>;
+                    }
+                  }, this)}
+                </div>
+              );
+            } else {
+              return <div />;
+            }
           }, this)}
         </div>
-        The following matches was found:
+        <div class="headline">The following matches was found:</div>
         {props.searchResults.map(result => (
           <SearchResult result={result} />
         ))}

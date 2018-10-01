@@ -7,22 +7,18 @@ import cache from "../store/cacheStore.js";
 export default {
   name: "FullRecordContainer",
 
-  data: () => ({ recordData: {}, pdfUrl: "", startPage: 0, id: "" }),
+  data: () => ({ recordData: {}, pdfUrl: "", startPage: 1, id: "" }),
 
   methods: {
     setRecordData(rd) {
-<<<<<<< HEAD
-      console.log(rd.doc);
-=======
       console.log("rddoc", rd.doc);
->>>>>>> 7848b7e0dd9591fd0b7c3a78a88badd1c1e547b5
       this.recordData = rd;
     },
     setPdfUrl(pdfUrl) {
       this.pdfUrl = pdfUrl;
     },
     setStartPage() {
-      this.startPage = 0;
+      this.startPage = 1;
     },
 
     setId(id) {
