@@ -18,15 +18,31 @@ export default {
 
     getChapter: function() {
       return this.record.doc ? this.record.doc.chapter : "";
+    },
+    getPage: function() {
+      return this.record.doc ? (this.record.doc.page == 0 ? this.record.doc.page : this.record.doc.page - 1) : "";
     }
   },
 
   render(h) {
     return (
-      <div>
-        <div>ID: {this.getId()}</div>
-        <div>Title: {this.getTitle()}</div>
-        <div>Chapter: {this.getChapter()}</div>
+      <div class="pdfMetadata">
+        <div>
+          <span>ID:</span>
+          <span>{this.getId()}</span>
+        </div>
+        <div>
+          <span>Title:</span>
+          <span>{this.getTitle()}</span>
+        </div>
+        <div>
+          <span>Chapter:</span>
+          <span>{this.getChapter()}</span>
+        </div>
+        <div>
+          <span>Page:</span>
+          {<span>{this.getPage()}</span>}
+        </div>
       </div>
     );
   }

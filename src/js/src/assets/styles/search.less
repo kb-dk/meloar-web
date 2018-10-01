@@ -23,6 +23,9 @@
   font-size: 130%;
   background-color: rgba(30, 30, 30, 0.3);
   color: white;
+  -webkit-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.3);
 }
 
 ::-webkit-input-placeholder {
@@ -103,42 +106,31 @@
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 10px;
   padding: 1em;
+  -webkit-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
-.resultTitle {
-  font-size: 200%;
-  display: inline-block;
-  text-transform: uppercase;
-}
-
-.resultInfo {
-  text-transform: uppercase;
-  font-size: 69%;
-  vertical-align: top;
-  padding-top: 12px;
-  margin-left: 15px;
+.searchResult a {
+  text-decoration: none;
   color: rgba(30, 30, 30, 0.5);
+  text-transform: uppercase;
 }
 
-.resultPlace {
-  display: block !important;
-  top: -11px;
-  position: relative;
+.overallInfo {
+  width: 50%;
+  float: left;
 }
 
-.resultInfo span {
-  font-weight: bold;
-  color: rgba(30, 30, 30, 0.7);
+.mapContainer {
+  width: 50%;
+  float: right;
 }
 
 .searchResult div {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
   border-radius: 10px;
-}
-
-.searchResult div div {
-  display: inline-block;
 }
 
 .title {
@@ -150,39 +142,40 @@
 }
 
 .snippet {
-  background-color: rgba(30, 30, 30, 0.1);
+  background-color: rgba(255, 255, 255, 0.3);
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 10px;
+  -webkit-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
-.snippet .chapterTitle {
+.snippet .chapterTitle,
+.snippet .pageTitle {
   text-transform: uppercase;
   font-size: 80%;
-  display: inline-block;
   color: rgba(30, 30, 30, 0.5);
-  margin-right: 10px;
+  margin-right: 5px;
+  display: inline-block;
 }
 
+.snippet .pageNumber,
 .snippet .chapterName {
+  margin-right: 5px;
   display: inline-block;
 }
 
 .snippet ul {
   list-style-type: none;
-  padding: 15px;
+  padding-left: 5px;
+  padding-bottom: 5px;
 }
 
-.pdfTitle {
-  margin-top: 0px !important;
-  display: inline-block;
-  margin-right: 10px;
+.snippet a {
+  text-decoration: none;
   color: rgba(30, 30, 30, 0.5);
-}
-
-.pdfTitle span {
-  font-size: 37%;
-  display: block;
+  text-transform: uppercase;
 }
 
 .matches .numbersFound {
@@ -198,7 +191,11 @@
 .highlightText {
   //color: rgba(30, 30, 30, 0.5);
   font-weight: bold;
-  border-bottom: 1px solid rgba(16, 255, 235, 0.493);
+  border-bottom: 1px solid rgba(165, 192, 255, 0.5);
+}
+.headline {
+  text-transform: uppercase;
+  color: rgba(30, 30, 30, 0.5);
 }
 
 .renderedSnippet {
@@ -242,12 +239,36 @@
 
 .pdfPreviewPane {
   float: left;
-  overflow: auto;
+  width: 200px;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+.pdfDocumentView .pdf-document {
+  width: 70% !important;
+  height: auto !important;
+  margin-left: 15%;
 }
 
 .pdfDocumentView {
-  width: 80%;
+  width: calc(100% - 200px);
   float: right;
+}
+
+.pdfMetadata {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.pdfMetadata div {
+  margin-top: 5px;
+}
+
+.pdfMetadata div span:first-child {
+  text-transform: uppercase;
+  color: rgba(30, 30, 30, 0.5);
+  margin-right: 10px;
 }
 
 .facet {
@@ -262,6 +283,9 @@
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 10px;
   padding: 1em;
+  -webkit-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
 .facets .facet .facetHitNumber,
@@ -277,6 +301,7 @@
   max-width: 85%;
   text-overflow: ellipsis;
   cursor: pointer;
+  //border-bottom: 1px solid rgba(165, 192, 255, 0.5);
 }
 
 .facets .facet .facetHitNumber {
@@ -285,11 +310,80 @@
 
 .facetName {
   font-weight: bold;
+  text-transform: uppercase;
+  padding-bottom: 5px;
+}
+
+.generalInfo {
+  overflow: auto;
 }
 
 .resultMap {
-  height: 500px;
-  width: 500px;
+  height: 250px;
+  width: 450px;
   position: relative;
+  display: block;
+  border-radius: 10px !important;
+  -webkit-transition: all 500ms ease-out 0s;
+  -moz-transition: all 500ms ease-out 0s;
+  -o-transition: all 500ms ease-out 0s;
+  transition: all 500ms ease-out 0s;
+  float: right;
+  margin-right: 50px;
+  -webkit-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+.resultMap div {
+  display: block;
+}
+
+.leaflet-control-container {
+  -webkit-transition: all 500ms ease-out 0s;
+  -moz-transition: all 500ms ease-out 0s;
+  -o-transition: all 500ms ease-out 0s;
+  transition: all 500ms ease-out 0s;
+  opacity: 0;
+}
+
+.resultMap:hover .leaflet-control-container {
+  opacity: 1;
+}
+
+.resultMap:hover {
+  border-radius: 10px !important;
+}
+
+.pdfTitle,
+.resultInfo,
+.authorTitle,
+.placeTitle {
+  display: block !important;
+  color: rgba(30, 30, 30, 0.5);
+  text-transform: uppercase;
+  margin-top: 25px !important;
+  font-size: 80%;
+}
+
+.pdfTitle:first-child {
+  margin-top: 0px !important;
+}
+
+.pdfName,
+.resultDate,
+.resultPlace,
+.authorName {
+  display: block;
+  margin-bottom: 0px !important;
+  margin-top: 0px !important;
+}
+
+.authorName {
+  display: inline-block;
+}
+
+.entirePdfLink {
+  margin-top: 25px;
   display: block;
 }

@@ -12,6 +12,7 @@ export default {
 
   methods: {
     drawPage() {
+      console.log(this.page);
       if (this.renderTask) return;
 
       const { viewport } = this;
@@ -31,7 +32,6 @@ export default {
 
     destroyPage(page) {
       if (!page) return;
-
       // PDFPageProxy#_destroy
       // https://mozilla.github.io/pdf.js/api/draft/PDFPageProxy.html
       page._destroy();
@@ -75,9 +75,7 @@ export default {
     canvasStyle() {
       const { width: actualSizeWidth, height: actualSizeHeight } = this.actualSizeViewport;
       const pixelRatio = window.devicePixelRatio || 1;
-      const [pixelWidth, pixelHeight] = [actualSizeWidth, actualSizeHeight].map(dim =>
-        Math.ceil(dim / pixelRatio)
-      );
+      const [pixelWidth, pixelHeight] = [actualSizeWidth, actualSizeHeight].map(dim => Math.ceil(dim / pixelRatio));
       return `width: ${pixelWidth}px; height: ${pixelHeight}px;`;
     },
 

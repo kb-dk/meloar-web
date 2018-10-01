@@ -26,6 +26,6 @@ export default {
   },
 
   render(h) {
-    return <h5 class="chapterName" domPropsInnerHTML={this.highlightString(this.chapterString, this.query)} />;
+    return <div class="chapterName" domPropsInnerHTML={this.highlightString(this.chapterString, this.query)} />;
   }
 };
