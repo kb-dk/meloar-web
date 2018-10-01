@@ -7,7 +7,7 @@ import cache from "../store/cacheStore.js";
 export default {
   name: "FullRecordContainer",
 
-  data: () => ({ recordData: {}, pdfUrl: "", startPage: 1, id: "" }),
+  data: () => ({ recordData: {}, pdfUrl: "", startPage: 0, id: "" }),
 
   methods: {
     setRecordData(rd) {
@@ -18,7 +18,7 @@ export default {
       this.pdfUrl = pdfUrl;
     },
     setStartPage() {
-      this.startPage = 1;
+      this.startPage = 0;
     },
 
     setId(id) {
