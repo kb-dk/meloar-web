@@ -7,7 +7,7 @@ import cache from "../store/cacheStore.js";
 export default {
   name: "FullRecordContainer",
 
-  data: () => ({ recordData: {}, pdfUrl: "", startPage: 0, id: "" }),
+  data: () => ({ recordData: {}, pdfUrl: "", startPage: 0, id: "", singlePage: false }),
 
   methods: {
     setRecordData(rd) {
@@ -23,6 +23,13 @@ export default {
 
     setId(id) {
       this.id = id;
+    },
+
+    setPageRenderMode(page) {
+      console.log("decoded page", page);
+      if (page) {
+        this.singlePage = true;
+      }
     }
   },
 
@@ -30,14 +37,20 @@ export default {
     return (
       <div>
         <RecordMetaData record={this.recordData} />
-        <PDFDocument class="pdf-document" record={this.recordData} />
+        <PDFDocument class="pdf-document" record={this.recordData} singlePage={this.singlePage} />
       </div>
     );
   },
   beforeRouteEnter(to, from, next) {
+    console.log("params params to", to);
+    console.log("params params from", from);
     next(vm => {
       if (isResultStored(to.params.id)) {
         vm.setRecordData(cache.searchCache[to.params.id]);
+      }
+      if (to.query && to.query.page) {
+        console.log("page rendering!!!!!!!!!");
+        vm.setPageRenderMode(true);
       }
       vm.setId(to.params.id);
     });
