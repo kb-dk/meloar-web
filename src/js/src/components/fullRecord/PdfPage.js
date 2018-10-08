@@ -1,5 +1,15 @@
+/**
+ * Based on rossta's excellent toturial and code
+ * on using pdf.js with vue
+ * https://github.com/rossta/vue-pdfjs-demo
+ */
+
 export default {
   name: "PdfPage",
+  data: () => ({
+    elementTop: 0,
+    elementHeight: 0
+  }),
 
   props: {
     page: {
@@ -7,12 +17,19 @@ export default {
     },
     scale: {
       type: Number
+    },
+    scrollTop: {
+      type: Number,
+      default: 0
+    },
+    clientHeight: {
+      type: Number,
+      default: 0
     }
   },
 
   methods: {
     drawPage() {
-      console.log(this.page);
       if (this.renderTask) return;
 
       const { viewport } = this;
@@ -48,6 +65,11 @@ export default {
       // https://mozilla.github.io/pdf.js/api/draft/RenderTask.html
       this.renderTask.cancel();
       delete this.renderTask;
+    },
+    updateElementBounds() {
+      const { offsetTop, offsetHeight } = this.$el;
+      this.elementTop = offsetTop;
+      this.elementHeight = offsetHeight;
     }
   },
 
@@ -75,12 +97,31 @@ export default {
     canvasStyle() {
       const { width: actualSizeWidth, height: actualSizeHeight } = this.actualSizeViewport;
       const pixelRatio = window.devicePixelRatio || 1;
-      const [pixelWidth, pixelHeight] = [actualSizeWidth, actualSizeHeight].map(dim => Math.ceil(dim / pixelRatio));
+      const [pixelWidth, pixelHeight] = [actualSizeWidth, actualSizeHeight].map(dim =>
+        Math.ceil(dim / pixelRatio)
+      );
       return `width: ${pixelWidth}px; height: ${pixelHeight}px;`;
     },
 
     actualSizeViewport() {
       return this.viewport.clone({ scale: this.scale });
+    },
+
+    isElementVisible() {
+      const { elementTop, elementBottom, scrollTop, scrollBottom } = this;
+      if (!elementBottom) {
+        return;
+      }
+
+      return elementTop < scrollBottom && elementBottom > scrollTop;
+    },
+
+    elementBottom() {
+      return this.elementTop + this.elementHeight;
+    },
+
+    scrollBottom() {
+      return this.scrollTop + this.clientHeight;
     }
   },
   beforeDestroy() {
@@ -88,13 +129,24 @@ export default {
   },
 
   mounted() {
-    this.drawPage();
+    //this.drawPage();
+    this.updateElementBounds();
   },
 
   watch: {
     page(page, oldPage) {
       this.destroyPage(oldPage);
-    }
+    },
+
+    isElementVisible(isElementVisible) {
+      if (isElementVisible) {
+        this.drawPage();
+      }
+    },
+
+    scale: "updateElementBounds",
+    scrollTop: "updateElementBounds",
+    clientHeight: "updateElementBounds"
   },
 
   render(h) {

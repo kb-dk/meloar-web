@@ -1,3 +1,9 @@
+/**
+ * Based on rossta's excellent toturial and code
+ * on using pdf.js with vue
+ * https://github.com/rossta/vue-pdfjs-demo
+ */
+
 export default {
   name: "PdfPreview",
   data: () => ({ pdfSrc: "" }),
@@ -74,7 +80,9 @@ export default {
     canvasStyle() {
       const { width: actualSizeWidth, height: actualSizeHeight } = this.actualSizeViewport;
       const pixelRatio = window.devicePixelRatio || 1;
-      const [pixelWidth, pixelHeight] = [actualSizeWidth, actualSizeHeight].map(dim => Math.ceil(dim / pixelRatio));
+      const [pixelWidth, pixelHeight] = [actualSizeWidth, actualSizeHeight].map(dim =>
+        Math.ceil(dim / pixelRatio)
+      );
       return `width: ${pixelWidth}px; height: ${pixelHeight}px;`;
     },
 
