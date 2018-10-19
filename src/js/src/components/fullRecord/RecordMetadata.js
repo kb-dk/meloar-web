@@ -26,22 +26,25 @@ export default {
 
   render(h) {
     return (
-      <div class="pdfMetadata">
-        <div>
-          <span>ID:</span>
-          <span>{this.getId()}</span>
-        </div>
-        <div>
-          <span>Title:</span>
-          <span>{this.getTitle()}</span>
-        </div>
-        <div>
-          <span>Chapter:</span>
-          <span>{this.getChapter()}</span>
-        </div>
-        <div>
-          <span>Page:</span>
-          {<span>{this.getPage()}</span>}
+      <div id="pdfInformationTab">
+        <div class="informmationButton">i</div>
+        <div class="pdfMetadata">
+          <div>
+            <span>ID:</span>
+            <span>{this.getId()}</span>
+          </div>
+          <div>
+            <span>Title:</span>
+            <span>{this.getTitle()}</span>
+          </div>
+          <div>
+            <span>Chapter:</span>
+            <span>{this.getChapter()}</span>
+          </div>
+          <div>
+            <span>Page:</span>
+            <span>{this.getPage()}</span>
+          </div>
         </div>
       </div>
     );

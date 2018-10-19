@@ -8,6 +8,10 @@ export default {
     search(e) {
       this.$router.push({ name: "search", params: { query: this.searchState.query } });
       e.preventDefault();
+    },
+    returnToStart() {
+      this.searchState.query = "";
+      this.$router.push({ name: "home" });
     }
   },
   render() {
@@ -21,7 +25,8 @@ export default {
             value={this.searchState.query}
             onInput={e => (this.searchState.query = e.target.value)}
           />
-          <button title="Search" type="submit" />
+          <button class="submitButton" title="Search" type="submit" />
+          <button class="resetButton" title="Reset" type="reset" on-click={this.returnToStart} />
         </form>
       </div>
     );
