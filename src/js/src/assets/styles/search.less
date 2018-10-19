@@ -45,7 +45,7 @@
   color: white;
 }
 
-.searchbox form button {
+.searchbox form .submitButton {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -60,7 +60,7 @@
   top: 255px;
 }
 
-.searchbox form button::before {
+.searchbox form .submitButton::before {
   content: "";
   position: absolute;
   width: 15px;
@@ -71,7 +71,7 @@
   transform: rotate(45deg);
 }
 
-.searchbox form button::after {
+.searchbox form .submitButton::after {
   content: "";
   position: absolute;
   width: 15px;
@@ -82,6 +82,47 @@
   left: 16px;
   background-color: rgba(255, 255, 255, 0.1);
   transform: rotate(45deg);
+}
+
+.searchbox form .resetButton {
+  -webkit-box-shadow: 0px 10px 15px -10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 10px 15px -10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  margin-top: 14px;
+  margin-left: 8px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  background-color: rgba(30, 30, 30, 0.5);
+  border: 2px solid white;
+  border-radius: 90px;
+  color: white;
+}
+
+.searchbox form .resetButton::before {
+  content: "";
+  position: relative;
+  display: block;
+  height: 20px;
+  width: 3px;
+  background-color: white;
+  transform: rotate(45deg);
+  left: 8px;
+  top: 4px;
+}
+
+.searchbox form .resetButton::after {
+  content: "";
+  display: block;
+  position: relative;
+  height: 20px;
+  width: 3px;
+  background-color: white;
+  transform: rotate(-45deg);
+  top: -16px;
+  left: 8px;
 }
 
 .searchbox.notFrontpage {
@@ -101,14 +142,14 @@
 }
 
 .searchResult {
-  margin-top: 1em;
-  margin-bottom: 1em;
+  padding-top: 1px;
+  margin-top: 2em;
+  margin-bottom: 2em;
   background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
-  padding: 1em;
-  -webkit-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
+  //padding: 1em;
+  -webkit-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.2);
 }
 
 .searchResult a {
@@ -118,19 +159,46 @@
 }
 
 .overallInfo {
-  width: 50%;
+  padding-left: 1em;
+  padding-top: 1em;
+  width: calc(50% - 1em);
   float: left;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
 }
 
 .mapContainer {
+  margin: 0px !important;
+  padding: 0px !important;
   width: 50%;
   float: right;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+}
+
+.mapContainer:after {
+  z-index: 1000;
+  display: block;
+  height: 150%;
+  top: -25%;
+  left: -110px;
+  transform: rotateZ(-17deg);
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  width: 150px;
+  content: "";
+  background-color: rgba(233, 233, 233, 1);
+  -webkit-box-shadow: 0px 26px 22px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 26px 22px 5px rgba(0, 0, 0, 0.2);
 }
 
 .searchResult div {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
-  border-radius: 10px;
 }
 
 .title {
@@ -142,13 +210,12 @@
 }
 
 .snippet {
-  background-color: rgba(255, 255, 255, 0.3);
+  margin: 5px;
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 10px;
-  -webkit-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
+  background-color: rgba(150, 150, 150, 0.1);
+  border-left: 5px solid rgba(30, 30, 30, 0.2);
 }
 
 .snippet .chapterTitle,
@@ -164,6 +231,8 @@
 .snippet .chapterName {
   margin-right: 5px;
   display: inline-block;
+  font-size: 80%;
+  text-transform: uppercase;
 }
 
 .snippet ul {
@@ -174,8 +243,21 @@
 
 .snippet a {
   text-decoration: none;
-  color: rgba(30, 30, 30, 0.5);
+  color: white;
   text-transform: uppercase;
+  background-color: rgba(30, 30, 30, 0.5);
+  padding: 5px;
+  padding-right: 10px;
+  border: 1px solid white;
+  font-size: 80%;
+}
+
+.snippet a span {
+  display: inline-block;
+  color: rgba(0, 245, 220, 0.69);
+  height: 100%;
+  width: 20px;
+  margin-right: -5px;
 }
 
 .matches .numbersFound {
@@ -184,14 +266,18 @@
 }
 
 .matches {
+  margin-left: 1em;
   display: block !important;
   color: rgba(30, 30, 30, 0.5);
+  text-transform: uppercase;
+  font-size: 80%;
+  margin-top: 20px !important;
 }
 
 .highlightText {
   //color: rgba(30, 30, 30, 0.5);
   font-weight: bold;
-  border-bottom: 1px solid rgba(165, 192, 255, 0.5);
+  border-bottom: 1px solid rgba(0, 245, 220, 0.69);
 }
 .headline {
   text-transform: uppercase;
@@ -251,7 +337,7 @@
 }
 
 .pdf-document {
-  position:relative !important;
+  position: relative !important;
 }
 
 .pdfDocumentView canvas {
@@ -285,14 +371,15 @@
   width: 25%;
   display: inline-block;
   vertical-align: top;
+  flex: 1;
 }
 
 .facets {
   margin-top: 1em;
   margin-bottom: 1em;
   background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
   padding: 1em;
+  display: flex;
   -webkit-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
   box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
@@ -325,23 +412,39 @@
 }
 
 .generalInfo {
+  margin-top: 5px !important;
+  background-color: rgba(233, 233, 233, 1);
   overflow: auto;
+  display: flex;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .resultMap {
-  height: 250px;
-  width: 450px;
+  height: 100%;
+  width: 100%;
   position: relative;
   display: block;
-  border-radius: 10px !important;
   -webkit-transition: all 500ms ease-out 0s;
   -moz-transition: all 500ms ease-out 0s;
   -o-transition: all 500ms ease-out 0s;
   transition: all 500ms ease-out 0s;
   float: right;
-  margin-right: 50px;
+  margin: 0px !important;
+  padding: 0px;
   -webkit-box-shadow: 0px 5px 10px -5px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 0px 5px 10px -5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 5px 10px -5px rgba(0, 0, 0, 0.3);
+}
+
+.searchMap {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  display: block;
+  -webkit-transition: all 500ms ease-out 0s;
+  transition: all 500ms ease-out 0s;
+  -webkit-box-shadow: 0px 5px 10px -5px rgba(0, 0, 0, 0.3);
   box-shadow: 0px 5px 10px -5px rgba(0, 0, 0, 0.3);
 }
 
@@ -349,20 +452,105 @@
   display: block;
 }
 
+.searchMapContainer {
+  position: absolute;
+  display: block;
+  top: 0px;
+  width: auto;
+  left: 0px;
+  height: auto;
+  height: 80vh;
+  width: 80vw;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+}
+
+.locationSearch {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+.locationSearch span {
+  cursor: pointer;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 0px solid grey;
+  border-radius: 5px;
+  padding: 8px 8px 8px 8px;
+  font-size: 100%;
+  background-color: rgba(30, 30, 30, 0.3);
+  color: white;
+}
+
+.mapClose {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  display: block;
+  z-index: 1000;
+  position: absolute;
+  float: right;
+  left: calc(80vw + 2px);
+  top: calc(0vh - 20px);
+}
+
+.mapClose:before {
+  left: 7px;
+  content: "";
+  position: relative;
+  display: block;
+  height: 20px;
+  width: 3px;
+  background-color: rgba(30, 30, 30, 0.5);
+  transform: rotate(45deg);
+}
+
+.mapClose:after {
+  content: "";
+  display: block;
+  position: relative;
+  height: 20px;
+  width: 3px;
+  background-color: rgba(30, 30, 30, 0.5);
+  transform: rotate(-45deg);
+  top: -20px;
+  left: 7px;
+}
+
+.searchMapContainer.hidden {
+  visibility: hidden;
+}
+
+.searchMapContainer.shown {
+  visibility: visible;
+}
+
 .leaflet-control-container {
-  -webkit-transition: all 500ms ease-out 0s;
-  -moz-transition: all 500ms ease-out 0s;
-  -o-transition: all 500ms ease-out 0s;
-  transition: all 500ms ease-out 0s;
   opacity: 0;
+}
+
+.mapContainer .leaflet-top.leaflet-left {
+  margin-left: 25px;
+}
+
+.searchMapContainer .leaflet-control-container {
+  -webkit-transition: all 0ms ease-out 0s;
+  -moz-transition: all 0ms ease-out 0s;
+  -o-transition: all 0ms ease-out 0s;
+  transition: all 0ms ease-out 0s;
+  opacity: 1;
+}
+
+.leaflet-tile-pane {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
 }
 
 .resultMap:hover .leaflet-control-container {
   opacity: 1;
-}
-
-.resultMap:hover {
-  border-radius: 10px !important;
 }
 
 .pdfTitle,
@@ -404,11 +592,38 @@
 }
 
 .entirePdfLink {
-  margin-top: 25px;
   display: block;
+  text-decoration: none;
+  color: white;
+  text-transform: uppercase;
+  padding: 10px;
+  padding-bottom: 15px;
+  padding-right: 10px;
+  font-size: 80%;
 }
 
 .noShowMap {
   text-align: center;
   margin-top: 105px !important;
+}
+
+.mapSearch {
+  display: block;
+  height: 25px;
+  width: 70px;
+  text-align: center;
+  z-index: 1000;
+  position: absolute;
+  bottom: -40px;
+  margin-left: calc(50% - 35px);
+  cursor: pointer;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 0px solid grey;
+  border-radius: 5px;
+  padding: 8px 8px 8px 8px;
+  font-size: 100%;
+  background-color: rgba(30, 30, 30, 0.3);
+  color: white;
+  line-height: 8px;
 }
