@@ -11,7 +11,6 @@ export default {
 
   methods: {
     setRecordData(rd) {
-      console.log("rddoc", rd.doc);
       this.recordData = rd;
     },
     setPdfUrl(pdfUrl) {
@@ -26,7 +25,6 @@ export default {
     },
 
     setPageRenderMode(page) {
-      console.log("decoded page", page);
       if (page) {
         this.singlePage = true;
       }
@@ -36,23 +34,23 @@ export default {
   render(h) {
     return (
       <div>
+        {console.log("render called full record", this.recordData)}
         <RecordMetaData record={this.recordData} />
         <PDFDocument class="pdf-document" record={this.recordData} singlePage={this.singlePage} />
       </div>
     );
   },
-  beforeRouteEnter(to, from, next) {
-    console.log("params params to", to);
-    console.log("params params from", from);
-    next(vm => {
-      if (isResultStored(to.params.id)) {
-        vm.setRecordData(cache.searchCache[to.params.id]);
-      }
-      if (to.query && to.query.page) {
-        console.log("page rendering!!!!!!!!!");
-        vm.setPageRenderMode(true);
-      }
-      vm.setId(to.params.id);
-    });
+  beforeMount() {
+    console.log(this.$route.params);
+    console.log(this.$route.query);
+    if (isResultStored(this.$route.params.id)) {
+      console.log("cache", cache.searchCache[this.$route.params.id]);
+      this.recordData = cache.searchCache[this.$route.params.id];
+    }
+    if (this.$route.query && this.$route.query.page) {
+      console.log("page rendering");
+      this.setPageRenderMode(true);
+    }
+    this.setId(this.$route.params.id);
   }
 };

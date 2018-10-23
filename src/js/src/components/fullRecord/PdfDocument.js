@@ -1,40 +1,17 @@
-/**
- * Based on rosstas excellent toturial and code
- * on using pdf.js with vue
- * https://github.com/rossta/vue-pdfjs-demo
- */
-
-import PdfPage from "./PdfPage.js";
-import PdfPreview from "./PdfPreview.js";
-import range from "lodash/range";
-import throttle from "lodash/throttle";
-
-//Move to config later
-const BATCH_COUNT = 10;
-
-//Move to seperate handler later
-function getPages(pdf, first, last) {
-  const allPages = range(first, last + 1).map(number => pdf.getPage(number));
-  return Promise.all(allPages);
-}
+import pdfjs from "pdfjs-dist";
+import { PDFViewer } from "pdfjs-dist/lib/web/pdf_viewer";
+import { PDFFindController } from "pdfjs-dist/lib/web/pdf_find_controller";
+import { PDFSinglePageViewer } from "pdfjs-dist/lib/web/pdf_single_page_viewer";
+import { PDFLinkService } from "pdfjs-dist/lib/web/pdf_link_service";
+import searchState from "../../store/searchStore.js";
+import "pdfjs-dist/web/pdf_viewer.css";
 
 export default {
   name: "PdfDocument",
-  //...
-  data: () => ({
-    pdf: undefined,
-    pages: [],
-    primaryPageNum: 0,
-    scrollTop: 0,
-    clientHeight: 0,
-    cursor: 0,
-    didReachBottom: false,
-    singlePageloaded: false
-  }),
 
-  created() {
-    this.fetchPDF();
-  },
+  data: () => ({ pdfViewer: null }),
+
+  created() {},
 
   props: {
     record: Object,
@@ -42,124 +19,114 @@ export default {
   },
 
   methods: {
+    /**I need to DRY this out.... */
     fetchPDF() {
-      import("pdfjs-dist/webpack")
-        .then(pdfjs => pdfjs.getDocument(this.getUrl()))
-        .then(pdf => (this.pdf = pdf));
+      // Some PDFs need CMAPS
+      const CMAP_URLS = "../../../node_modules/pdfjs-dist/cmaps ";
+      // local variable from prop to determine if single page
+      const _SINGLE_PAGE = this.singlePage;
+      // Retrieve the page the user wants to see
+      const PAGE_TO_VIEW = this.getSinglePageNumber();
+      // In vue2 we use refs for getting an element - use only when nescessary
+      const PDF_CONTAINER = this.$refs.pdfViewer;
+      //We need reference to this because of reduced scope
+      const _self = this;
+      //Reference to link service and pdf viewer
+      let pdfLinkService, pdfViewer;
+      //api/pdf?url=http://www.kulturarv.dk/fundogfortidsminder/resource/193241
+
+      //Initialize and attach viewer to container
+      if (this.singlePage) {
+        pdfViewer = new PDFSinglePageViewer({
+          container: PDF_CONTAINER
+        });
+      } else {
+        pdfLinkService = new PDFLinkService();
+        pdfViewer = new PDFViewer({
+          container: PDF_CONTAINER,
+          linkService: pdfLinkService
+        });
+        pdfLinkService.setViewer(pdfViewer);
+      }
+      //Initialize find controller to viewer
+      let pdfFindController = new PDFFindController({
+        pdfViewer: pdfViewer
+      });
+      //Attach find controller to viewer
+      pdfViewer.setFindController(pdfFindController);
+
+      PDF_CONTAINER.addEventListener("pagesinit", function() {
+        // We can use pdfSinglePageViewer now, e.g. let's change default scale.
+        pdfViewer.currentScaleValue = "page-width";
+
+        // Change the page in view if single page
+        if (_self.singlePage) {
+          pdfViewer.currentPageNumber = PAGE_TO_VIEW;
+        }
+        //Initialize find controller to viewer
+        _self.initFindController(pdfFindController);
+      });
+      //Load the actual pdf document - either single page or whole document
+      this.loadPDFDocument(_SINGLE_PAGE, pdfViewer, CMAP_URLS, pdfLinkService);
+    },
+
+    loadPDFDocument(_SINGLE_PAGE, pdfViewer, CMAP_URLS, pdfLinkService) {
+      pdfjs.GlobalWorkerOptions.workerSrc = "../../../node_modules/pdfjs-dist/lib/pdf.worker.js";
+      pdfjs
+        .getDocument({
+          url: this.getUrl(),
+          cMapUrl: CMAP_URLS,
+          cMapPacked: true,
+          //Not shure this is the best way to go - disabling stream and auto fetch.
+          //But seems to be less janky this way
+          disableAutoFetch: true,
+          disableStream: true
+        })
+        .then(function(pdfDocument) {
+          if (_SINGLE_PAGE) {
+            pdfViewer.setDocument(pdfDocument);
+          } else {
+            console.log("pdfDocument!!!!", pdfDocument);
+            pdfViewer.setDocument(pdfDocument);
+            pdfLinkService.setDocument(pdfDocument, null);
+          }
+        });
     },
 
     getUrl() {
       return "/api/pdf?url=" + this.record.doc.external_resource[0];
     },
 
-    getPage(pageNumber) {
-      return this.pages[pageNumber];
-    },
-    updateScrollBounds() {
-      const { scrollTop, clientHeight } = this.$el;
-      this.scrollTop = scrollTop;
-      this.clientHeight = clientHeight;
-      this.didReachBottom = this.isBottomVisible();
-    },
-
-    /**Aargggh - clean up this mess..... */
-    fetchPages() {
-      if (!this.pdf) return;
-      if (this.singlePageloaded) return;
-      let startPage, endPage;
-      const currentCount = this.pages.length;
-      if (this.singlePage) {
-        let singlePageIndexNumber = this.record.doc.page[0] - 1;
-        startPage = singlePageIndexNumber;
-        endPage = singlePageIndexNumber;
-        this.singlePageloaded = true;
-      } else {
-        if (this.pageCount > 0 && currentCount === this.pageCount) {
-          return;
-        }
-        if (this.cursor > currentCount) {
-          return;
-        }
-        startPage = currentCount + 1; // PDF page numbering starts at 1
-        endPage = Math.min(currentCount + BATCH_COUNT, this.pageCount);
-      }
-      this.cursor = endPage;
-      getPages(this.pdf, startPage, endPage)
-        .then(pages => {
-          this.pages.splice(currentCount, 0, ...pages);
-          return this.pages;
-        })
-        .catch(response => {
-          this.$emit("document-errored");
-        });
+    initFindController(pdfFindController) {
+      pdfFindController.executeCommand("find", {
+        caseSensitive: false,
+        findPrevious: undefined,
+        highlightAll: true,
+        //phraseSearch: true,
+        query: searchState.query
+      });
     },
 
-    isBottomVisible() {
-      const { scrollTop, clientHeight, scrollHeight } = this.$el;
-      return scrollTop + clientHeight >= scrollHeight;
-    },
-
-    isTopVisible() {
-      const { scrollTop } = this.$el;
-      return scrollTop === 0 ? true : false;
-    }
-  },
-
-  computed: {
-    pageCount() {
-      return this.pdf ? this.pdf.numPages : 0;
+    getSinglePageNumber() {
+      return this.record.doc.page[0] === 0 ? 1 : this.record.doc.page[0];
     }
   },
 
   render(h) {
     return (
-      <div>
-        <div class="pdfDocumentView">
-          {this.pages.map((page, index) => (
-            <div>
-              <PdfPage
-                class="pdf-page"
-                page={page}
-                scale={3}
-                scrollTop={this.scrollTop}
-                clientHeight={this.clientHeight}
-              />
-            </div>
-          ))}
-        </div>
+      <div id="pdfViewer" ref="pdfViewer">
+        <div id="viewer" class="pdfViewer" />
       </div>
-      /*<div class="pdfPreviewPane">
-          {this.pages.map((page, index) => (
-            <div>{index < 15 && <PdfPreview class="pdf-preview" page={page} scale={1} />}</div>
-          ))}
-        </div>
-      </div>*/
     );
   },
 
   mounted() {
-    this.updateScrollBounds();
-    const throttledCallback = throttle(this.updateScrollBounds, 300);
-
-    this.$el.addEventListener("scroll", throttledCallback, true);
-    window.addEventListener("resize", throttledCallback, true);
-
-    this.throttledOnResize = throttledCallback;
+    this.fetchPDF();
   },
 
   beforeDestroy() {
-    window.removeEventListener("resize", this.throttledOnResize, true);
-  },
-
-  watch: {
-    pdf(pdf) {
-      this.pages = [];
-      this.fetchPages();
-    },
-    didReachBottom(didReachBottom) {
-      if (didReachBottom) {
-        this.fetchPages();
-      }
+    if (this.pdfViewer !== null) {
+      this.pdfViewer.destroy();
     }
   }
 };
