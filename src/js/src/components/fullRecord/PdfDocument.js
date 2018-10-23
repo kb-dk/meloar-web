@@ -76,11 +76,11 @@ export default {
         .getDocument({
           url: this.getUrl(),
           cMapUrl: CMAP_URLS,
-          cMapPacked: true,
+          cMapPacked: true
           //Not shure this is the best way to go - disabling stream and auto fetch.
           //But seems to be less janky this way
-          disableAutoFetch: true,
-          disableStream: true
+          //disableAutoFetch: true,
+          //disableStream: true
         })
         .then(function(pdfDocument) {
           if (_SINGLE_PAGE) {
@@ -108,7 +108,9 @@ export default {
     },
 
     getSinglePageNumber() {
-      return this.record.doc.page[0] === 0 ? 1 : this.record.doc.page[0];
+      return this.record.doc.page[0] === 0 || this.record.doc.page[0] === 1
+        ? 1
+        : this.record.doc.page[0] - 1;
     }
   },
 
