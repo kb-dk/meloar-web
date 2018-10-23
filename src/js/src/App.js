@@ -6,10 +6,8 @@ export default {
 
   render(h) {
     return (
-      <div id="app">
-        <div>
-          <router-view />
-        </div>
+      <div>
+        <router-view />
       </div>
     );
   }
