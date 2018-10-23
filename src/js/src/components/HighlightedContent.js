@@ -16,10 +16,14 @@ export default {
 
   methods: {
     highlightStrings(arg, query) {
-      for (let i = 0; i < arg.length; i++) {
-        return arg[i].replace(new RegExp(query, "ig"), match => {
-          return '<span class="highlightText">' + match + "</span>";
-        });
+      if (query === "*.*") {
+        return arg;
+      } else {
+        for (let i = 0; i < arg.length; i++) {
+          return arg[i].replace(new RegExp(query, "ig"), match => {
+            return '<span class="highlightText">' + match + "</span>";
+          });
+        }
       }
     },
     isArrayEmpty(arg) {

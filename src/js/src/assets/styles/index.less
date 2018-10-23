@@ -89,10 +89,50 @@ video {
 }
 
 body {
-  background: rgba(224, 195, 252, 0.5);
-  background: -moz-linear-gradient(-45deg, rgba(136, 136, 136, 0.5) 33% rgba(142, 197, 252, 0.5) 99%);
-  background: -webkit-linear-gradient(-45deg, rgba(136, 136, 136, 0.5) 33%, rgba(142, 197, 252, 0.5) 99%);
-  background: linear-gradient(330deg, rgba(136, 136, 136, 0.5) 33%, rgba(142, 197, 252, 0.5) 99%);
+  background: rgba(213, 246, 240, 1);
+  background: -moz-linear-gradient(
+    -45deg,
+    rgba(213, 246, 240, 1) 0%,
+    rgba(230, 230, 230, 1) 33%,
+    rgba(240, 240, 240, 1) 66%,
+    rgba(245, 245, 245, 1) 100%
+  );
+  background: -webkit-gradient(
+    left top,
+    right bottom,
+    color-stop(0%, rgba(213, 246, 240, 1)),
+    color-stop(33%, rgba(230, 230, 230, 1)),
+    color-stop(66%, rgba(240, 240, 240, 1)),
+    color-stop(100%, rgba(245, 245, 245, 1))
+  );
+  background: -webkit-linear-gradient(
+    -45deg,
+    rgba(213, 246, 240, 1) 0%,
+    rgba(230, 230, 230, 1) 33%,
+    rgba(240, 240, 240, 1) 66%,
+    rgba(245, 245, 245, 1) 100%
+  );
+  background: -o-linear-gradient(
+    -45deg,
+    rgba(213, 246, 240, 1) 0%,
+    rgba(230, 230, 230, 1) 33%,
+    rgba(240, 240, 240, 1) 66%,
+    rgba(245, 245, 245, 1) 100%
+  );
+  background: -ms-linear-gradient(
+    -45deg,
+    rgba(213, 246, 240, 1) 0%,
+    rgba(230, 230, 230, 1) 33%,
+    rgba(240, 240, 240, 1) 66%,
+    rgba(245, 245, 245, 1) 100%
+  );
+  background: linear-gradient(
+    135deg,
+    rgba(213, 246, 240, 1) 0%,
+    rgba(230, 230, 230, 1) 33%,
+    rgba(240, 240, 240, 1) 66%,
+    rgba(245, 245, 245, 1) 100%
+  );
   color: rgba(30, 30, 30, 1);
   font-family: "Trebuchet MS", "Ubuntu";
   background-attachment: fixed;
@@ -111,5 +151,18 @@ body {
 .simpleNavigation a {
   text-decoration: none;
   border-bottom: 1px solid rgba(30, 30, 30, 0.5);
-  color: rgba(30, 30, 30, 1);
+  color: rgba(30, 30, 30, 0.5);
+}
+
+.leafletMarker {
+  background-color: rgba(0, 245, 220, 0.69);
+  width: 3rem;
+  height: 3rem;
+  display: block;
+  left: -1.5rem;
+  top: -1.5rem;
+  position: relative;
+  border-radius: 3rem 3rem 0;
+  transform: rotate(45deg);
+  border: 1px solid #ffffff;
 }
