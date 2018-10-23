@@ -57,7 +57,7 @@ export default {
 
       PDF_CONTAINER.addEventListener("pagesinit", function() {
         // We can use pdfSinglePageViewer now, e.g. let's change default scale.
-        pdfViewer.currentScaleValue = "page-width";
+        //pdfViewer.currentScaleValue = "page-width";
 
         // Change the page in view if single page
         if (_self.singlePage) {
