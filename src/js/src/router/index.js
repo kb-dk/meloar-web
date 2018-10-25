@@ -18,6 +18,13 @@ const router = new Router({
       name: "home",
       component: HomeContainer
     },
+
+    //If no search performed we redirect to home
+    {
+      path: "/search",
+      redirect: "/"
+    },
+
     // Searching
     {
       path: "/search/:query",
