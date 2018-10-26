@@ -1,5 +1,5 @@
 import searchState from "../store/searchStore.js";
-import { search } from "../services/SearchService.js";
+import searchService from "../services/SearchService.js";
 import SearchResults from "../components/SearchResults.js";
 import SearchBox from "../components/SearchBox";
 
@@ -23,23 +23,7 @@ export default {
     setFacets(facets) {
       this.facets = facets;
     },
-    structureSearchResult(searchResults) {
-      let highLights = [];
-      let results = [];
-      for (let i = 0; i < searchResults.grouped.loar_id.groups.length; i++) {
-        searchResults.grouped.loar_id.groups[i].query = searchResults.responseHeader.params.q;
-        for (let o = 0; o < searchResults.grouped.loar_id.groups[i].doclist.docs.length; o++) {
-          const highLightsBlock =
-            searchResults.highlighting[searchResults.grouped.loar_id.groups[i].doclist.docs[o].id].content;
-          highLights = highLightsBlock ? highLightsBlock : [];
-          searchResults.grouped.loar_id.groups[i].doclist.docs[o].highLightSnippets = highLights;
-        }
-        results.push(searchResults.grouped.loar_id.groups[i]);
-      }
-      console.log("RESULTS");
-      console.log(results);
-      return results;
-    },
+
     getFacets(searchResults) {
       let facets = JSON.parse(JSON.stringify(searchResults.facet_counts.facet_fields));
       return facets;
@@ -48,9 +32,9 @@ export default {
 
   beforeRouteEnter(to, from, next) {
     console.log(searchState.query);
-    search(searchState.query).then(searchResult => {
+    searchService.search(searchState.query).then(searchResult => {
       next(vm => {
-        vm.setSearchResult(vm.structureSearchResult(searchResult));
+        vm.setSearchResult(searchService.structureSearchResult(searchResult));
         vm.setFacets(vm.getFacets(searchResult));
       });
     });
@@ -58,9 +42,9 @@ export default {
 
   beforeRouteUpdate(to, from, next) {
     if (checkForSearchChange(to, from)) {
-      search(to.params.query).then(searchResult => {
+      searchService.search(to.params.query).then(searchResult => {
         searchState.query = to.params.query;
-        this.setSearchResult(this.structureSearchResult(searchResult));
+        this.setSearchResult(searchService.structureSearchResult(searchResult));
         this.setFacets(this.getFacets(searchResult));
         next();
       });
