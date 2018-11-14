@@ -6,13 +6,13 @@ import SearchBox from "../components/SearchBox";
 export default {
   name: "SearchContainer",
 
-  data: () => ({ searchResult: [], query: searchState.query, facets: {} }),
+  data: () => ({ searchResult: [], query: searchState.query, facets: {}, hits: "" }),
 
   render(h) {
     return (
       <div class="searchContainer">
         <SearchBox placeholder={this.query} class="notFrontpage" />
-        <SearchResults searchResults={this.searchResult} facets={this.facets} />
+        <SearchResults searchResults={this.searchResult} facets={this.facets} hits={this.hits} />
       </div>
     );
   },
@@ -23,10 +23,16 @@ export default {
     setFacets(facets) {
       this.facets = facets;
     },
-
+    setHits(hits) {
+      this.hits = hits;
+    },
     getFacets(searchResults) {
       let facets = JSON.parse(JSON.stringify(searchResults.facet_counts.facet_fields));
       return facets;
+    },
+    getHits(searchResults) {
+      let hits = searchResults.grouped.loar_id.matches.toString();
+      return hits;
     }
   },
 
@@ -36,6 +42,7 @@ export default {
       next(vm => {
         vm.setSearchResult(searchService.structureSearchResult(searchResult));
         vm.setFacets(vm.getFacets(searchResult));
+        vm.setHits(vm.getHits(searchResult));
       });
     });
   },
@@ -46,6 +53,7 @@ export default {
         searchState.query = to.params.query;
         this.setSearchResult(searchService.structureSearchResult(searchResult));
         this.setFacets(this.getFacets(searchResult));
+        this.setHits(this.getHits(searchResult));
         next();
       });
     } else {

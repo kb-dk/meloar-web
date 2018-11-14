@@ -14,6 +14,10 @@ export default {
     facets: {
       type: Object,
       required: true
+    },
+    hits: {
+      type: String,
+      required: true
     }
   },
   methods: {
@@ -58,7 +62,9 @@ export default {
             }
           }, this)}
         </div>
-        <div class="headline">The following matches was found:</div>
+        <div class="headline">
+          <span class="numbersFound">{props.hits}</span> matches was found.
+        </div>
         {props.searchResults.map(result => (
           <SearchResult result={result} />
         ))}
