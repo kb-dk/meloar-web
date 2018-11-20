@@ -2,12 +2,14 @@ import RecordMetaData from "../components/fullRecord/RecordMetadata.js";
 import PDFDocument from "../components/fullRecord/PdfDocument.js";
 
 import { isResultStored } from "../store/cacheStoreHelper.js";
+import searchService from "../services/SearchService.js";
+import searchState from "../store/searchStore.js";
 import cache from "../store/cacheStore.js";
 
 export default {
   name: "FullRecordContainer",
 
-  data: () => ({ recordData: {}, pdfUrl: "", startPage: 0, id: "", singlePage: false }),
+  data: () => ({ recordData: null, pdfUrl: "", startPage: 0, id: "", singlePage: false }),
 
   methods: {
     setRecordData(rd) {
@@ -31,26 +33,43 @@ export default {
     }
   },
 
-  render(h) {
+  render: function(h) {
     return (
       <div>
-        {console.log("render called full record", this.recordData)}
-        <RecordMetaData record={this.recordData} />
-        <PDFDocument class="pdf-document" record={this.recordData} singlePage={this.singlePage} />
+        {this.recordData && (
+          <div>
+            <RecordMetaData record={this.recordData} />
+          </div>
+        )}
+        {this.recordData && (
+          <PDFDocument class="pdf-document" record={this.recordData} singlePage={this.singlePage} />
+        )}
       </div>
     );
   },
-  beforeMount() {
-    console.log(this.$route.params);
-    console.log(this.$route.query);
-    if (isResultStored(this.$route.params.id)) {
-      console.log("cache", cache.searchCache[this.$route.params.id]);
-      this.recordData = cache.searchCache[this.$route.params.id];
+
+  beforeRouteEnter(to, from, next) {
+    if (isResultStored(to.params.id)) {
+      next(vm => {
+        vm.setRecordData(cache.searchCache[to.params.id]);
+        if (to.query && to.query.page) {
+          console.log("page rendering - retrieving from cache");
+          vm.setPageRenderMode(true);
+        }
+        vm.setId(to.params.id);
+      });
+    } else {
+      searchService.search("id:" + to.params.id).then(searchResult => {
+        next(vm => {
+          const structuredRes = searchService.structureSearchResult(searchResult);
+          vm.setRecordData({ doc: structuredRes[0].doclist.docs[0] });
+          if (to.query && to.query.page) {
+            console.log("page rendering - new search - probably reload");
+            vm.setPageRenderMode(true);
+          }
+          vm.setId(to.params.id);
+        });
+      });
     }
-    if (this.$route.query && this.$route.query.page) {
-      console.log("page rendering");
-      this.setPageRenderMode(true);
-    }
-    this.setId(this.$route.params.id);
   }
 };

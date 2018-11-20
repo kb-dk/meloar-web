@@ -81,6 +81,7 @@ export default {
           //But seems to be less janky this way
           //disableAutoFetch: true,
           //disableStream: true
+          //disableRange: true
         })
         .then(function(pdfDocument) {
           if (_SINGLE_PAGE) {
