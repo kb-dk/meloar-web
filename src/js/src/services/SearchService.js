@@ -4,10 +4,15 @@ import axios from "axios";
 export default {
   search: function(query) {
     const searchUrl = "/api/search?group.field=loar_id&group.limit=50&group=true&q=" + query;
-    return axios.get(searchUrl).then(response => {
-      storeSearchResult(response.data);
-      return response.data;
-    });
+    return axios
+      .get(searchUrl)
+      .then(response => {
+        storeSearchResult(response.data);
+        return response.data;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
   },
 
   structureSearchResult: function(searchResults) {

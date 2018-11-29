@@ -37,7 +37,7 @@ const router = new Router({
       component: AboutContainer
     },
     {
-      path: "/record/:id",
+      path: "/record/",
       name: "record",
       component: FullRecordContainer
     }

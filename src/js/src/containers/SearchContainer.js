@@ -6,11 +6,22 @@ import SearchBox from "../components/SearchBox";
 export default {
   name: "SearchContainer",
 
-  data: () => ({ searchResult: [], query: searchState.query, facets: {}, hits: "" }),
+  data: () => ({
+    searchResult: [],
+    query: searchState.query,
+    facets: {},
+    hits: "",
+    searchError: false
+  }),
 
   render(h) {
     return (
       <div class="searchContainer">
+        {this.searchError && (
+          <div class="searchError">
+            Something went terribly wrong with your search. Please try agin.
+          </div>
+        )}
         <SearchBox placeholder={this.query} class="notFrontpage" />
         <SearchResults searchResults={this.searchResult} facets={this.facets} hits={this.hits} />
       </div>
@@ -33,29 +44,45 @@ export default {
     getHits(searchResults) {
       let hits = searchResults.grouped.loar_id.matches.toString();
       return hits;
+    },
+    setErrorStatus() {
+      this.searchError = true;
     }
   },
 
   beforeRouteEnter(to, from, next) {
     console.log(searchState.query);
-    searchService.search(searchState.query).then(searchResult => {
-      next(vm => {
-        vm.setSearchResult(searchService.structureSearchResult(searchResult));
-        vm.setFacets(vm.getFacets(searchResult));
-        vm.setHits(vm.getHits(searchResult));
+    searchService
+      .search(searchState.query)
+      .then(searchResult => {
+        next(vm => {
+          vm.setSearchResult(searchService.structureSearchResult(searchResult));
+          vm.setFacets(vm.getFacets(searchResult));
+          vm.setHits(vm.getHits(searchResult));
+        });
+      })
+      .catch(reason => {
+        next(vm => {
+          vm.setErrorStatus();
+          console.log("reason!!!!", reason);
+        });
       });
-    });
   },
 
   beforeRouteUpdate(to, from, next) {
     if (checkForSearchChange(to, from)) {
-      searchService.search(to.params.query).then(searchResult => {
-        searchState.query = to.params.query;
-        this.setSearchResult(searchService.structureSearchResult(searchResult));
-        this.setFacets(this.getFacets(searchResult));
-        this.setHits(this.getHits(searchResult));
-        next();
-      });
+      searchService
+        .search(to.params.query)
+        .then(searchResult => {
+          searchState.query = to.params.query;
+          this.setSearchResult(searchService.structureSearchResult(searchResult));
+          this.setFacets(this.getFacets(searchResult));
+          this.setHits(this.getHits(searchResult));
+          next();
+        })
+        .catch(reason => {
+          this.searchError = true;
+        });
     } else {
       next();
     }
