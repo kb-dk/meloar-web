@@ -42,12 +42,19 @@ export default {
       let returnValue;
       returnValue = id.replace(/\//g, "_");
       returnValue = returnValue.replace(/:/g, "_");
-      return returnValue;
+      return "mapId-" + returnValue;
     }
   },
 
   mounted() {
     this.createMap(this.coordinates, this.id);
+  },
+
+  beforeMount() {
+    if (document.getElementById(this.fixedId(this.id))) {
+      var element = document.getElementById(this.fixedId(this.id));
+      element.id = this.fixedId(this.id + "-obsolete");
+    }
   },
 
   render(h) {
