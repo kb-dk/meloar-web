@@ -9,7 +9,7 @@ import "pdfjs-dist/web/pdf_viewer.css";
 export default {
   name: "PdfDocument",
 
-  data: () => ({ pdfViewer: null }),
+  data: () => ({ pdfViewer: null, pdfLoading: true }),
 
   created() {},
 
@@ -41,12 +41,13 @@ export default {
           container: PDF_CONTAINER
         });
       } else {
-        pdfLinkService = new PDFLinkService();
+        /**Disabled link service for now */
+        // pdfLinkService = new PDFLinkService();
         pdfViewer = new PDFViewer({
           container: PDF_CONTAINER,
           linkService: pdfLinkService
         });
-        pdfLinkService.setViewer(pdfViewer);
+        //pdfLinkService.setViewer(pdfViewer);
       }
       //Initialize find controller to viewer
       let pdfFindController = new PDFFindController({
@@ -67,10 +68,10 @@ export default {
         _self.initFindController(pdfFindController);
       });
       //Load the actual pdf document - either single page or whole document
-      this.loadPDFDocument(_SINGLE_PAGE, pdfViewer, CMAP_URLS, pdfLinkService);
+      this.loadPDFDocument(_SINGLE_PAGE, pdfViewer, CMAP_URLS, pdfLinkService, _self);
     },
 
-    loadPDFDocument(_SINGLE_PAGE, pdfViewer, CMAP_URLS, pdfLinkService) {
+    loadPDFDocument(_SINGLE_PAGE, pdfViewer, CMAP_URLS, pdfLinkService, _self) {
       pdfjs.GlobalWorkerOptions.workerSrc = "../../../node_modules/pdfjs-dist/lib/pdf.worker.js";
       pdfjs
         .getDocument({
@@ -80,18 +81,22 @@ export default {
           //Not shure this is the best way to go - disabling stream and auto fetch.
           //But seems to be less janky this way
           //disableAutoFetch: true,
-          //disableStream: true
+          //disableStream: true,
           //disableRange: true
         })
         .then(function(pdfDocument) {
           if (_SINGLE_PAGE) {
             pdfViewer.setDocument(pdfDocument);
+            _self.pdfLoading = false;
           } else {
-            console.log("pdfDocument!!!!", pdfDocument);
             pdfViewer.setDocument(pdfDocument);
-            pdfLinkService.setDocument(pdfDocument, null);
+            _self.pdfLoading = false;
+            /** Disabling link service for now */
+            //pdfLinkService.setDocument(pdfDocument, null);
           }
         });
+
+      // this.pdfViewer = pdfViewer;
     },
 
     getUrl() {
@@ -103,22 +108,25 @@ export default {
         caseSensitive: false,
         findPrevious: undefined,
         highlightAll: true,
-        //phraseSearch: true,
+        phraseSearch: true,
         query: searchState.query
       });
     },
 
     getSinglePageNumber() {
-      return this.record.doc.page[0] === 0 || this.record.doc.page[0] === 1
-        ? 1
-        : this.record.doc.page[0] - 1;
+      return this.record.doc.page[0] === 0 ? 1 : this.record.doc.page[0];
     }
   },
 
   render(h) {
     return (
-      <div id="pdfViewer" ref="pdfViewer">
-        <div id="viewer" class="pdfViewer" />
+      <div>
+        <div>{this.pdfLoading && <div class="pdfLoader">LOADING PDF</div>}</div>
+        <div>
+          <div id="pdfViewer" ref="pdfViewer">
+            <div id="viewer" class="pdfViewer" />
+          </div>
+        </div>
       </div>
     );
   },
@@ -128,6 +136,7 @@ export default {
   },
 
   beforeDestroy() {
+    // Not destroyed properly at the moment - check for memory leaks...
     if (this.pdfViewer !== null) {
       this.pdfViewer.destroy();
     }

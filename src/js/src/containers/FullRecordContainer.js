@@ -30,6 +30,9 @@ export default {
       if (page) {
         this.singlePage = true;
       }
+    },
+    setQuery(query) {
+      searchState.query = query;
     }
   },
 
@@ -49,27 +52,32 @@ export default {
   },
 
   beforeRouteEnter(to, from, next) {
-    if (isResultStored(to.params.id)) {
+    console.log(to.query.id);
+    if (isResultStored(to.query.id)) {
       next(vm => {
-        vm.setRecordData(cache.searchCache[to.params.id]);
+        vm.setRecordData(cache.searchCache[to.query.id]);
         if (to.query && to.query.page) {
-          console.log("page rendering - retrieving from cache");
           vm.setPageRenderMode(true);
         }
-        vm.setId(to.params.id);
+        vm.setId(to.query.id);
       });
     } else {
-      searchService.search("id:" + to.params.id).then(searchResult => {
-        next(vm => {
-          const structuredRes = searchService.structureSearchResult(searchResult);
-          vm.setRecordData({ doc: structuredRes[0].doclist.docs[0] });
-          if (to.query && to.query.page) {
-            console.log("page rendering - new search - probably reload");
-            vm.setPageRenderMode(true);
-          }
-          vm.setId(to.params.id);
+      searchService
+        .search("id:" + to.query.id)
+        .then(searchResult => {
+          next(vm => {
+            vm.setQuery(to.query.query);
+            const structuredRes = searchService.structureSearchResult(searchResult);
+            vm.setRecordData({ doc: structuredRes[0].doclist.docs[0] });
+            if (to.query && to.query.page) {
+              vm.setPageRenderMode(true);
+            }
+            vm.setId(to.query.id);
+          });
+        })
+        .catch(reason => {
+          console.log("Search error", reason);
         });
-      });
     }
   }
 };

@@ -11,10 +11,10 @@ export default {
     }
   },
   methods: {
-    getRecordLink(id, page) {
+    getRecordLink(id, page, query) {
       return page
-        ? { path: "/record/" + encodeURIComponent(id), query: { page: true } }
-        : { path: "/record/" + encodeURIComponent(id) };
+        ? { path: "/record/", query: { page: true, id: encodeURIComponent(id), query: query } }
+        : { path: "/record/", query: { id: encodeURIComponent(id), query: query } };
     },
     transformDate(date) {
       const convertedDate = new Date(date);
@@ -42,8 +42,8 @@ export default {
             <div class="resultInfo">Time</div>
             <div class="timeTitle" />
             <div class="resultDate">
-              From approx <span>{this.transformDate(this.result.doclist.docs["0"].ctime)}</span> years ago (
-              {this.deliverTimeBetween(this.result.doclist.docs["0"].ctime)})
+              From approx <span>{this.transformDate(this.result.doclist.docs["0"].ctime)}</span>{" "}
+              years ago ({this.deliverTimeBetween(this.result.doclist.docs["0"].ctime)})
             </div>
             <div class="placeTitle">Place</div>
             <div class="resultPlace">{this.result.doclist.docs["0"].place_name}</div>
@@ -73,8 +73,8 @@ export default {
         {this.result.query != "*.*" ? (
           <div class="matches">
             <span class="numbersFound">{this.result.doclist.numFound}</span>{" "}
-            {this.result.doclist.numFound > 1 ? <span>matches</span> : <span>match</span>} found in pdf. Displaying{" "}
-            <span class="numbersFound">{this.result.doclist.docs.length}</span>.
+            {this.result.doclist.numFound > 1 ? <span>matches</span> : <span>match</span>} found in
+            pdf. Displaying <span class="numbersFound">{this.result.doclist.docs.length}</span>.
           </div>
         ) : (
           <div />
@@ -86,11 +86,18 @@ export default {
               <div class="chapterTitle">chapter </div>
               <HighlightedChapter chapterString={snippets.chapter} query={this.result.query} />{" "}
               <div class="pageTitle">page </div>{" "}
-              {snippets.page == 0 ? <div class="pageNumber">1</div> : <div class="pageNumber">{snippets.page - 1}</div>}
+              {snippets.page == 0 ? (
+                <div class="pageNumber">1</div>
+              ) : (
+                <div class="pageNumber">{snippets.page - 1}</div>
+              )}
               <ul>
-                <HighlightedContent contentArray={snippets.highLightSnippets} query={this.result.query} />
+                <HighlightedContent
+                  contentArray={snippets.highLightSnippets}
+                  query={this.result.query}
+                />
               </ul>
-              <router-link to={this.getRecordLink(snippets.id, true)}>
+              <router-link to={this.getRecordLink(snippets.id, true, this.result.query)}>
                 <span>⮊</span> Go to hit
               </router-link>
             </div>
@@ -98,7 +105,10 @@ export default {
         ) : (
           <div />
         )}
-        <router-link class="entirePdfLink" to={this.getRecordLink(this.result.doclist.docs["0"].id)}>
+        <router-link
+          class="entirePdfLink"
+          to={this.getRecordLink(this.result.doclist.docs["0"].id)}
+        >
           See entire pdf
         </router-link>
       </div>
