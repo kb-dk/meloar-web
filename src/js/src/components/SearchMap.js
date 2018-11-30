@@ -95,22 +95,11 @@ export default {
     },
     fireSearch() {
       searchState.query =
-        "*.*&d=" +
-        this.searchRadius / 1000 +
-        "&facet=on&fq={!geofilt%20sfield=place_coordinates}&group.field=loar_id&group=true&pt=" +
-        this.searchPosition[1] +
-        "," +
-        this.searchPosition[0];
+        "*.*&d=" + this.searchRadius / 1000 + "&pt=" + this.searchPosition[1] + "," + this.searchPosition[0];
       this.$router.push({
         name: "search",
         params: {
-          query:
-            "*.*&d=" +
-            this.searchRadius / 1000 +
-            "&facet=on&fq={!geofilt%20sfield=place_coordinates}&group.field=loar_id&group=true&pt=" +
-            this.searchPosition[1] +
-            "," +
-            this.searchPosition[0]
+          query: "*.*&d=" + this.searchRadius / 1000 + "&pt=" + this.searchPosition[1] + "," + this.searchPosition[0]
         }
       });
       console.log();
