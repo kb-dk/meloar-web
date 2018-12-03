@@ -9,7 +9,7 @@ import "pdfjs-dist/web/pdf_viewer.css";
 export default {
   name: "PdfDocument",
 
-  data: () => ({ pdfViewer: null, pdfLoading: true }),
+  data: () => ({ pdfViewer: null, pdfLoading: true, pdfError: false }),
 
   created() {},
 
@@ -94,6 +94,10 @@ export default {
             /** Disabling link service for now */
             //pdfLinkService.setDocument(pdfDocument, null);
           }
+        })
+        .catch(function(err) {
+          _self.pdfLoading = false;
+          _self.pdfError = true;
         });
 
       // this.pdfViewer = pdfViewer;
@@ -123,6 +127,11 @@ export default {
       <div>
         <div>{this.pdfLoading && <div class="pdfLoader">LOADING PDF</div>}</div>
         <div>
+          <div>
+            {this.pdfError && (
+              <div class="pdfLoadError">An error occurred - not able to load PDF</div>
+            )}
+          </div>
           <div id="pdfViewer" ref="pdfViewer">
             <div id="viewer" class="pdfViewer" />
           </div>
