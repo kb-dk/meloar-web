@@ -47,13 +47,19 @@ export default {
     },
     setErrorStatus() {
       this.searchError = true;
+    },
+    getQuery(to) {
+      let query = searchState.query;
+      if (query === "") {
+        console.log(to);
+      }
     }
   },
 
   beforeRouteEnter(to, from, next) {
-    console.log(searchState.query);
+    const query = searchState.query === "" ? to.params.query : searchState.query;
     searchService
-      .search(searchState.query)
+      .search(query)
       .then(searchResult => {
         next(vm => {
           vm.setSearchResult(searchService.structureSearchResult(searchResult));

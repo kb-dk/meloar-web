@@ -52,7 +52,6 @@ export default {
   },
 
   beforeRouteEnter(to, from, next) {
-    console.log(to.query.id);
     if (isResultStored(to.query.id)) {
       next(vm => {
         vm.setRecordData(cache.searchCache[to.query.id]);
