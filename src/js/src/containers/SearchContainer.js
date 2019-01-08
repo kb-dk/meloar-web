@@ -18,9 +18,7 @@ export default {
     return (
       <div class="searchContainer">
         {this.searchError && (
-          <div class="searchError">
-            Something went terribly wrong with your search. Please try agin.
-          </div>
+          <div class="searchError">Something went terribly wrong with your search. Please try agin.</div>
         )}
         <SearchBox placeholder={this.query} class="notFrontpage" />
         <SearchResults searchResults={this.searchResult} facets={this.facets} hits={this.hits} />

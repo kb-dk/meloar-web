@@ -11,6 +11,7 @@ export default {
     },
     returnToStart() {
       this.searchState.query = "";
+      this.searchState.queryDisplay = "";
       this.$router.push({ name: "home" });
     }
   },
@@ -22,7 +23,7 @@ export default {
             size="16"
             type="text"
             placeholder="Type to search."
-            value={this.searchState.query}
+            value={this.searchState.queryDisplay}
             onInput={e => (this.searchState.query = e.target.value)}
           />
           <button class="submitButton" title="Search" type="submit" />

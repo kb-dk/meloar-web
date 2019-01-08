@@ -1,6 +1,7 @@
 import SearchResult from "./SearchResult.js";
 import router from "../router/index.js";
 import searchState from "../store/searchStore.js";
+import AppliedFilters from "./AppliedFilters.js";
 
 export default {
   name: "SearchResults",
@@ -23,9 +24,13 @@ export default {
   methods: {
     filterFromFacets(name, key, props) {
       console.log(props.props.searchResults["0"].query);
+      var getQuery = searchState.query;
+      if (getQuery === "") {
+        getQuery = router.history.current.params.query;
+      }
       router.push({
         name: "search",
-        params: { query: searchState.query + "&fq=" + key.key + ':"' + encodeURIComponent(name.name) + '"' }
+        params: { query: getQuery + "&fq=" + key.key + ':"' + encodeURIComponent(name.name) + '"' }
       });
     }
   },
@@ -33,6 +38,7 @@ export default {
   render: (h, { props }) => {
     return (
       <div class="searchResults">
+        <AppliedFilters queryString={searchState.query} />
         <div class="headline">Filter by:</div>
         <div class="facets">
           {Object.keys(props.facets).map(function(key) {
@@ -63,7 +69,7 @@ export default {
           }, this)}
         </div>
         <div class="headline">
-          <span class="numbersFound">{props.hits}</span> matches was found.
+          <span class="numbersFound">{props.hits}</span> matches was found in {props.searchResults.length} pdfs.
         </div>
         {props.searchResults.map(result => (
           <SearchResult result={result} />

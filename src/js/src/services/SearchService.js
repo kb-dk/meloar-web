@@ -1,8 +1,14 @@
 import { storeSearchResult } from "../store/cacheStoreHelper.js";
+import searchState from "../store/searchStore.js";
 import axios from "axios";
 // Calls to search service
 export default {
   search: function(query) {
+    if (query.includes("&fq=")) {
+      searchState.queryDisplay = query.substring(0, query.indexOf("&fq="));
+    } else {
+      searchState.queryDisplay = query;
+    }
     const searchUrl = "/api/search?group.field=loar_id&group.limit=50&group=true&q=" + query;
     return axios
       .get(searchUrl)
@@ -22,8 +28,7 @@ export default {
       searchResults.grouped.loar_id.groups[i].query = searchResults.responseHeader.params.q;
       for (let o = 0; o < searchResults.grouped.loar_id.groups[i].doclist.docs.length; o++) {
         const highLightsBlock =
-          searchResults.highlighting[searchResults.grouped.loar_id.groups[i].doclist.docs[o].id]
-            .content;
+          searchResults.highlighting[searchResults.grouped.loar_id.groups[i].doclist.docs[o].id].content;
         highLights = highLightsBlock ? highLightsBlock : [];
         searchResults.grouped.loar_id.groups[i].doclist.docs[o].highLightSnippets = highLights;
       }
