@@ -20,14 +20,17 @@ export default {
       return this.record.doc ? this.record.doc.chapter : "";
     },
     getPage: function() {
-      return this.record.doc ? (this.record.doc.page == 0 ? this.record.doc.page : this.record.doc.page - 1) : "";
+      return this.record.doc
+        ? this.record.doc.page == 0
+          ? this.record.doc.page
+          : this.record.doc.page - 1
+        : "";
     }
   },
 
   render(h) {
     return (
       <div id="pdfInformationTab">
-        <div class="informmationButton">i</div>
         <div class="pdfMetadata">
           <div>
             <span>ID:</span>

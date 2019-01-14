@@ -9,7 +9,8 @@ import FullRecordContainer from "../containers/FullRecordContainer.js";
 Vue.use(Router);
 
 const router = new Router({
-  mode: "history",
+  base: "/",
+  //mode: "history",
 
   routes: [
     // Front page - home sweet home
