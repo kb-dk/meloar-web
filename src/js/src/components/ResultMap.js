@@ -32,8 +32,8 @@ export default {
         L.Marker.prototype.options.icon = DefaultIcon;
         let resultmap = L.map(this.fixedId(id));
         resultmap.setView(coordinates, 9);
-        L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
-          attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
+        L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+          attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
         }).addTo(resultmap);
         let marker = L.marker(coordinates).addTo(resultmap);
       }
