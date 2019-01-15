@@ -18,6 +18,9 @@ export default {
           <router-link class="menuLink" to="/About">
             About this
           </router-link>
+          <br />
+          <br />
+          <a href="https://www.labs.kb.dk">Back to labs.kb.dk</a>
         </div>
       </div>
     );
