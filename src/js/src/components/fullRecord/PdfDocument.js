@@ -15,7 +15,7 @@ export default {
   methods: {
     getUrl() {
       return (
-        "/api/pdf?url=" +
+        "/api/meloar/pdf?url=" +
         this.record.doc.external_resource[0] +
         "#search=" +
         searchState.query +
