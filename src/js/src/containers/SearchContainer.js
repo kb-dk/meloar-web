@@ -19,7 +19,7 @@ export default {
       <div class="searchContainer">
         {this.searchError && (
           <div class="searchError">
-            Something went terribly wrong with your search. Please try agin.
+            Something went terribly wrong with your search. Please try again.
           </div>
         )}
         <SearchBox placeholder={this.query} class="notFrontpage" />
