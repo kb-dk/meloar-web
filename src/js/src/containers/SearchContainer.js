@@ -22,6 +22,9 @@ export default {
             Something went terribly wrong with your search. Please try again.
           </div>
         )}
+        <div class="labsContainer">
+          <a href="http://labs.kb.dk/">Back to labs.kb.dk</a>
+        </div>
         <SearchBox placeholder={this.query} class="notFrontpage" />
         <SearchResults searchResults={this.searchResult} facets={this.facets} hits={this.hits} />
       </div>
