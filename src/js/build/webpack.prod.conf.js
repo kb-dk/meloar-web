@@ -77,7 +77,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
 
     new HtmlWebpackStringReplacePlugin({
-      _VERSION_: process.env.npm_package_version
+      _VERSION_: env.CURRENT_VERSION
     }),
     // keep module.id stable when vender modules does not change
     new webpack.HashedModuleIdsPlugin(),
