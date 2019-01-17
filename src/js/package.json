@@ -1,6 +1,6 @@
 {
   "name": "meloar",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "description": "Search frontend for Loar",
   "author": "Jørn Thøgersen <jt@kb.dk> && Jesper Lauridsen <jla@kb.dk>",
   "private": true,
@@ -45,6 +45,7 @@
     "file-loader": "^1.1.11",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "html-webpack-plugin": "^2.30.1",
+    "html-webpack-string-replace-plugin": "^1.1.0",
     "inject-loader": "^3.0.0",
     "karma": "^3.0.0",
     "karma-coverage": "^1.1.2",

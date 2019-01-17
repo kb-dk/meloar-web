@@ -2,10 +2,7 @@ export default {
   name: "highlightedChapter",
 
   props: {
-    chapterString: {
-      type: String,
-      required: true
-    },
+    chapterString: {},
     query: {
       type: String,
       required: true
@@ -19,7 +16,7 @@ export default {
       if (arg === "null") {
         return "Unknown";
       }
-      if (query === "*.*") {
+      if (query === "*.*" || query === "*:*") {
         return arg;
       }
       return arg.replace(new RegExp(query, "ig"), match => {
@@ -29,6 +26,11 @@ export default {
   },
 
   render(h) {
-    return <div class="chapterName" domPropsInnerHTML={this.highlightString(this.chapterString, this.query)} />;
+    return (
+      <div
+        class="chapterName"
+        domPropsInnerHTML={this.highlightString(this.chapterString, this.query)}
+      />
+    );
   }
 };

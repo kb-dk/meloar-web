@@ -15,17 +15,17 @@ export default {
       type: Object,
       required: true
     },
-    hits: {
-      type: String,
-      required: true
-    }
+    matchCount: {},
+    documentCount: {}
   },
   methods: {
     filterFromFacets(name, key, props) {
       console.log(props.props.searchResults["0"].query);
       router.push({
         name: "search",
-        params: { query: searchState.query + "&fq=" + key.key + ':"' + encodeURIComponent(name.name) + '"' }
+        params: {
+          query: searchState.query + "&fq=" + key.key + ':"' + encodeURIComponent(name.name) + '"'
+        }
       });
     }
   },
@@ -45,7 +45,9 @@ export default {
                     if (i % 2 == 0) {
                       return (
                         <div
-                          onClick={e => this.a.methods.filterFromFacets({ name }, { key }, { props })}
+                          onClick={e =>
+                            this.a.methods.filterFromFacets({ name }, { key }, { props })
+                          }
                           class="facetItem"
                         >
                           {name || "Unknown"}
@@ -63,7 +65,8 @@ export default {
           }, this)}
         </div>
         <div class="headline">
-          <span class="numbersFound">{props.hits}</span> matches was found.
+          <span class="numbersFound">{props.documentCount}</span> documents /{" "}
+          <span class="numbersFound">{props.matchCount}</span> matches found.
         </div>
         {props.searchResults.map(result => (
           <SearchResult result={result} />

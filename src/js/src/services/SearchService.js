@@ -29,8 +29,8 @@ export default {
       }
       results.push(searchResults.grouped.loar_id.groups[i]);
     }
-    console.log("RESULTS");
-    console.log(results);
+    //console.log("RESULTS");
+    //console.log(results);
     return results;
   }
 };
