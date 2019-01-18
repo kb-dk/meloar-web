@@ -33,6 +33,9 @@ export default {
     },
     setQuery(query) {
       searchState.query = query;
+    },
+    scrollToTop() {
+      window.scrollTo(0, 0);
     }
   },
 
@@ -59,6 +62,7 @@ export default {
           vm.setPageRenderMode(true);
         }
         vm.setId(to.query.id);
+        vm.scrollToTop();
       });
     } else {
       searchService
@@ -72,6 +76,7 @@ export default {
               vm.setPageRenderMode(true);
             }
             vm.setId(to.query.id);
+            vm.scrollToTop();
           });
         })
         .catch(reason => {

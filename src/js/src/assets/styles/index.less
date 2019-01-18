@@ -168,6 +168,9 @@ body {
 }
 
 .searchError {
+  position: absolute;
+  width: 100%;
+  padding-bottom: 3px;
   background-color: maroon;
   color: white;
   text-align: center;
@@ -194,6 +197,24 @@ body {
   color: white;
 }
 
+/* iframe styling */
+.iframe-container {
+  overflow: hidden;
+  padding-top: 56.25%;
+  position: relative;
+  height: 1000px;
+}
+
+.iframe-container iframe {
+  border: 0;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 90%;
+  margin: 1rem 1rem 1rem 4.5rem;
+}
+
 .aboutContainer {
   width: 500px;
   margin-left: calc(50% - 250px);
@@ -210,6 +231,19 @@ body {
 .aboutContainer .router {
   margin-top: 10px;
   text-align: center;
+}
+
+.labsContainer {
+  top: 5px;
+  position: absolute;
+  left: 5px;
+}
+
+.labsContainer a {
+  text-transform: uppercase;
+  font-size: 80%;
+  color: rgba(30, 30, 30, 0.5);
+  text-decoration: none;
 }
 
 @keyframes dots {
