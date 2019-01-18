@@ -7,4 +7,5 @@ npm-debug.log*
 .DS_Store*
 src/js/test/unit/coverage/
 src/js/test/e2e/reports/
+src/js/deployToTest.sh
 selenium-debug.log
