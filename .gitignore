@@ -8,3 +8,4 @@ npm-debug.log*
 src/js/test/unit/coverage/
 src/js/test/e2e/reports/
 selenium-debug.log
+deployToTest.sh

@@ -36,6 +36,7 @@ export default {
   },
 
   render: (h, { props }) => {
+    console.log("props", props);
     return (
       <div class="searchResults">
         <AppliedFilters queryString={searchState.query} route={router.history.current.path} />
@@ -69,7 +70,13 @@ export default {
           }, this)}
         </div>
         <div class="headline">
-          <span class="numbersFound">{props.hits}</span> matches was found in {props.searchResults.length} pdfs.
+          <span class="numbersFound">{props.hits}</span> matches was found in{" "}
+          {props.searchResults[0] != undefined ? (
+            <span class="numbersFound"> {props.searchResults[0].allHits}</span>
+          ) : (
+            <span class="numbersFound">Unknown</span>
+          )}{" "}
+          {props.searchResults.length > 1 ? <span>pdfs</span> : <span>pdf</span>}
         </div>
         {props.searchResults.map(result => (
           <SearchResult result={result} />
