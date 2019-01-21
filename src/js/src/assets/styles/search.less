@@ -633,3 +633,48 @@
   color: white;
   line-height: 8px;
 }
+
+.filterEntity div {
+  display: inline-block;
+  padding: 4px;
+}
+
+.filterEntity {
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  -webkit-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.appliedFilterSelection .filterEntity:last-of-type {
+  margin-right: 0px;
+}
+
+.appliedFilterSelection .filterEntity:first-of-type {
+  margin-left: 0px;
+}
+
+.filterEntity .filterCategory {
+  text-transform: uppercase;
+  color: rgba(30, 30, 30, 0.5);
+}
+
+.filterEntity .filterColon {
+  color: rgba(30, 30, 30, 0.5);
+}
+
+.filterEntity .filterClose {
+  color: rgba(30, 30, 30, 0.5);
+  font-size: 70%;
+  position: relative;
+  top: -2px;
+  margin-left: 3px;
+}
+
+.appliedFilterSelection {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}

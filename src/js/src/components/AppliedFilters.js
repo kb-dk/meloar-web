@@ -7,6 +7,10 @@ export default {
     queryString: {
       type: String,
       required: true
+    },
+    route: {
+      type: String,
+      required: true
     }
   },
 
@@ -40,6 +44,22 @@ export default {
         params: { query: mergedQuery }
       });
       console.log("clicked!", string);
+    },
+    findCategory(filter) {
+      var i = filter.indexOf(":");
+      var stringSplit = [filter.slice(0, i), filter.slice(i + 1)];
+      let category = stringSplit[0].substring(0, stringSplit[0].indexOf("_"));
+      console.log(category);
+      return category;
+    },
+    findName(filter) {
+      var i = filter.indexOf(":");
+      var stringSplit = [filter.slice(0, i), filter.slice(i + 1)];
+      console.log(stringSplit);
+      name = stringSplit[1];
+      name.replace('"', "");
+      console.log(name);
+      return name;
     }
   },
 
@@ -48,20 +68,26 @@ export default {
   },
 
   watch: {
-    queryString: function(newVal, oldVal) {
-      this.findFilters(newVal);
+    route: function(newVal, oldVal) {
+      this.findFilters(this.queryString);
       console.log("Prop changed: ", newVal, " | was: ", oldVal);
     }
   },
 
   render(h) {
+    console.log("router", router);
     return (
       <div class="appliedFilters">
         {this.filters.length > 0 ? <div class="headline">Applied Filters:</div> : <div />}
         {this.filters.length > 0 ? (
           <div class="appliedFilterSelection">
             {this.filters.map(filter => (
-              <div onClick={e => this.removeSingleFilter(filter)}>{filter}</div>
+              <div class="filterEntity" onClick={e => this.removeSingleFilter(filter)}>
+                <div class="filterCategory">{this.findCategory(filter)}</div>
+                <div class="filterColon">:</div>
+                <div class="filterName">{this.findName(filter)}</div>
+                <div class="filterClose">X</div>
+              </div>
             ))}
           </div>
         ) : (

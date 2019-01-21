@@ -38,7 +38,7 @@ export default {
   render: (h, { props }) => {
     return (
       <div class="searchResults">
-        <AppliedFilters queryString={searchState.query} />
+        <AppliedFilters queryString={searchState.query} route={router.history.current.path} />
         <div class="headline">Filter by:</div>
         <div class="facets">
           {Object.keys(props.facets).map(function(key) {
