@@ -43,22 +43,17 @@ export default {
         name: "search",
         params: { query: mergedQuery }
       });
-      console.log("clicked!", string);
     },
     findCategory(filter) {
       var i = filter.indexOf(":");
       var stringSplit = [filter.slice(0, i), filter.slice(i + 1)];
       let category = stringSplit[0].substring(0, stringSplit[0].indexOf("_"));
-      console.log(category);
       return category;
     },
     findName(filter) {
       var i = filter.indexOf(":");
       var stringSplit = [filter.slice(0, i), filter.slice(i + 1)];
-      console.log(stringSplit);
       name = stringSplit[1];
-      name.replace('"', "");
-      console.log(name);
       return name;
     }
   },
@@ -70,12 +65,10 @@ export default {
   watch: {
     route: function(newVal, oldVal) {
       this.findFilters(this.queryString);
-      console.log("Prop changed: ", newVal, " | was: ", oldVal);
     }
   },
 
   render(h) {
-    console.log("router", router);
     return (
       <div class="appliedFilters">
         {this.filters.length > 0 ? <div class="headline">Applied Filters:</div> : <div />}
