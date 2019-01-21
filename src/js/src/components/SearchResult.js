@@ -26,8 +26,21 @@ export default {
       const convertedDate = new Date(date);
       return convertedDate.getFullYear();
     },
-    seeAllHitsInSnippet() {
-      console.log(this);
+    seeAllHitsInSnippet(arg) {
+      if (arg.$el.getElementsByClassName("seeAllSnippets")[0].innerHTML === "See more hits") {
+        var elements = arg.$el.getElementsByClassName("snippet");
+        for (let i = 0; i < elements.length; i++) {
+          elements[i].style.display = "block";
+        }
+        arg.$el.getElementsByClassName("seeAllSnippets")[0].innerHTML = "See less hits";
+      } else {
+        var elements = arg.$el.getElementsByClassName("snippet");
+        for (let i = 0; i < elements.length; i++) {
+          elements[i].style.display = "";
+        }
+        arg.$el.getElementsByClassName("seeAllSnippets")[0].innerHTML = "See more hits";
+      }
+      console.log(arg.$el);
     }
   },
   render(h) {
@@ -35,7 +48,7 @@ export default {
     //console.log(this.result);
     let authors = this.result.doclist.docs["0"].author || ["Unknown"];
     return (
-      <div class="searchResult">
+      <div class="searchResult" id={this.result.doclist.docs["0"].loar_id.replace(/:|\s|\//g, "-")}>
         <div class="generalInfo">
           <div class="overallInfo">
             <div class="resultTitle">
@@ -77,12 +90,19 @@ export default {
           <div class="matches">
             <span class="numbersFound">{this.result.doclist.numFound}</span>{" "}
             {this.result.doclist.numFound > 1 ? <span>matches</span> : <span>match</span>} found in pdf. Displaying{" "}
-            {this.result.doclist.docs.length < 5 ? (
+            {this.result.doclist.docs.length < 3 ? (
               <span class="numbersFound">{this.result.doclist.docs.length}</span>
             ) : (
-              <span class="numbersFound">5</span>
+              <span class="numbersFound">3</span>
             )}
-            . <span onclick={this.seeAllHitsInSnippet()}>See all hits</span>
+            .{" "}
+            {this.result.doclist.docs.length > 3 ? (
+              <span class="seeAllSnippets" onClick={e => this.seeAllHitsInSnippet(this)}>
+                See more hits
+              </span>
+            ) : (
+              <span class="seeAllSnippets" />
+            )}
           </div>
         ) : (
           <div />
