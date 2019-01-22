@@ -79,7 +79,7 @@ export default {
           {props.searchResults.length > 1 || props.searchResults.length === 0 ? <span>pdfs</span> : <span>pdf</span>}
         </div>
         {props.searchResults.map(result => (
-          <SearchResult result={result} />
+          <SearchResult result={result} queryString={router.history.current.params.query} />
         ))}
       </div>
     );

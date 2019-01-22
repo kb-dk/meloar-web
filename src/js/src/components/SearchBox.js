@@ -6,7 +6,21 @@ export default {
   data: () => ({ searchState }),
   methods: {
     search(e) {
-      this.$router.push({ name: "search", params: { query: this.searchState.query } });
+      console.log(this.$router.history.current.params.query);
+      let filters = this.$router.history.current.params.query;
+      let fixedFilters = "";
+      if (filters != undefined) {
+        if (filters.indexOf("&d=") > -1 || filters.indexOf("&fq=") > -1) {
+          if (filters.indexOf("&d=") > filters.indexOf("&fq=")) {
+            fixedFilters = "&d=" + filters.split("&d=").pop();
+          } else {
+            fixedFilters = "&fq=" + filters.split("&fq=").pop();
+          }
+        }
+        console.log(fixedFilters);
+      }
+      //console.log(filters);
+      this.$router.push({ name: "search", params: { query: this.searchState.query + fixedFilters } });
       e.preventDefault();
     },
     returnToStart() {

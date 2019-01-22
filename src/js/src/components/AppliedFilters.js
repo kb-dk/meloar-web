@@ -84,7 +84,7 @@ export default {
       let name;
       if (filter.includes("&pt=") === true) {
         let location = filter.split("&pt=");
-        name = "Radius: " + location[0] + ", Origin: " + location[1];
+        name = "d=" + location[0] + "&pt=" + location[1];
       } else {
         let i = filter.indexOf(":");
         let stringSplit = [filter.slice(0, i), filter.slice(i + 1)];

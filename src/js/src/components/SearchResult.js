@@ -8,6 +8,10 @@ export default {
     result: {
       type: Object,
       required: true
+    },
+    queryString: {
+      type: String,
+      requred: true
     }
   },
   methods: {
@@ -88,7 +92,7 @@ export default {
             />
           </div>
         </div>
-        {this.result.query != "*.*" ? (
+        {this.queryString.includes("&pt=") != true ? (
           <div class="matches">
             <span class="numbersFound">{this.result.doclist.numFound}</span>{" "}
             {this.result.doclist.numFound > 1 ? <span>matches</span> : <span>match</span>} found in pdf. Displaying{" "}
@@ -110,7 +114,7 @@ export default {
           <div />
         )}
 
-        {this.result.query != "*.*" ? (
+        {this.queryString.includes("&pt=") != true ? (
           this.result.doclist.docs.map(snippets => (
             <div class="snippet">
               <div class="chapterTitle">chapter </div>
