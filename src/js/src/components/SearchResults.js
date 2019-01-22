@@ -39,7 +39,7 @@ export default {
     console.log("We rendering! Why tho?");
     return (
       <div class="searchResults">
-        <AppliedFilters queryString={searchState.query} route={router.history.current.path} />
+        <AppliedFilters queryString={searchState.query || ""} route={router.history.current.path} />
         <div class="headline">Filter by:</div>
         <div class="facets">
           {Object.keys(props.facets).map(function(key) {

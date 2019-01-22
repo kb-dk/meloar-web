@@ -17,8 +17,8 @@ export default {
   methods: {
     getRecordLink(id, page, query) {
       return page
-        ? { path: "/record/", query: { page: true, id: encodeURIComponent(id), query: query } }
-        : { path: "/record/", query: { id: encodeURIComponent(id), query: query } };
+        ? { path: "/record/", query: { page: true, id: encodeURIComponent(id), query: this.queryString } }
+        : { path: "/record/", query: { id: encodeURIComponent(id), query: this.queryString } };
     },
     transformDate(date) {
       const convertedDate = new Date(date);
@@ -132,7 +132,10 @@ export default {
         ) : (
           <div />
         )}
-        <router-link class="entirePdfLink" to={this.getRecordLink(this.result.doclist.docs["0"].id)}>
+        <router-link
+          class="entirePdfLink"
+          to={this.getRecordLink(this.result.doclist.docs["0"].id, true, this.result.query)}
+        >
           See entire pdf
         </router-link>
         <div class="seeAllSnippetsBottomContainer">
