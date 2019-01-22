@@ -15,7 +15,7 @@ export default {
     }
   },
   methods: {
-    getRecordLink(id, page, query) {
+    getRecordLink(id, page) {
       return page
         ? { path: "/record/", query: { page: true, id: encodeURIComponent(id), query: this.queryString } }
         : { path: "/record/", query: { id: encodeURIComponent(id), query: this.queryString } };
