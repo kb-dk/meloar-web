@@ -4,7 +4,9 @@ import axios from "axios";
 // Calls to search service
 export default {
   search: function(query) {
-    if (query.includes("&fq=")) {
+    if (query.includes("&d=")) {
+      searchState.queryDisplay = query.substring(0, query.indexOf("&d="));
+    } else if (query.includes("&fq=")) {
       searchState.queryDisplay = query.substring(0, query.indexOf("&fq="));
     } else {
       searchState.queryDisplay = query;

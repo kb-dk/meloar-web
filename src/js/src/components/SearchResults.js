@@ -36,7 +36,7 @@ export default {
   },
 
   render: (h, { props }) => {
-    console.log("props", props);
+    console.log("We rendering! Why tho?");
     return (
       <div class="searchResults">
         <AppliedFilters queryString={searchState.query} route={router.history.current.path} />
@@ -74,9 +74,9 @@ export default {
           {props.searchResults[0] != undefined ? (
             <span class="numbersFound"> {props.searchResults[0].allHits}</span>
           ) : (
-            <span class="numbersFound">Unknown</span>
+            <span class="numbersFound">0</span>
           )}{" "}
-          {props.searchResults.length > 1 ? <span>pdfs</span> : <span>pdf</span>}
+          {props.searchResults.length > 1 || props.searchResults.length === 0 ? <span>pdfs</span> : <span>pdf</span>}
         </div>
         {props.searchResults.map(result => (
           <SearchResult result={result} />

@@ -33,12 +33,14 @@ export default {
           elements[i].style.display = "block";
         }
         arg.$el.getElementsByClassName("seeAllSnippets")[0].innerHTML = "See less hits";
+        arg.$el.getElementsByClassName("seeAllSnippets")[1].style.display = "block";
       } else {
         var elements = arg.$el.getElementsByClassName("snippet");
         for (let i = 0; i < elements.length; i++) {
           elements[i].style.display = "";
         }
         arg.$el.getElementsByClassName("seeAllSnippets")[0].innerHTML = "See more hits";
+        arg.$el.getElementsByClassName("seeAllSnippets")[1].style.display = "none";
       }
       console.log(arg.$el);
     }
@@ -101,7 +103,7 @@ export default {
                 See more hits
               </span>
             ) : (
-              <span class="seeAllSnippets" />
+              <span class="AllSnippets" />
             )}
           </div>
         ) : (
@@ -129,6 +131,11 @@ export default {
         <router-link class="entirePdfLink" to={this.getRecordLink(this.result.doclist.docs["0"].id)}>
           See entire pdf
         </router-link>
+        <div class="seeAllSnippetsBottomContainer">
+          <span class="seeAllSnippets" onClick={e => this.seeAllHitsInSnippet(this)}>
+            See less hits
+          </span>
+        </div>
       </div>
     );
   }
