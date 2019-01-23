@@ -38,6 +38,7 @@ export default {
         }
         arg.$el.getElementsByClassName("seeAllSnippets")[0].innerHTML = "See less hits";
         arg.$el.getElementsByClassName("seeAllSnippets")[1].style.display = "block";
+        arg.$el.getElementsByClassName("numbersFound")[1].innerHTML = elements.length;
       } else {
         var elements = arg.$el.getElementsByClassName("snippet");
         for (let i = 0; i < elements.length; i++) {
@@ -45,6 +46,7 @@ export default {
         }
         arg.$el.getElementsByClassName("seeAllSnippets")[0].innerHTML = "See more hits";
         arg.$el.getElementsByClassName("seeAllSnippets")[1].style.display = "none";
+        arg.$el.getElementsByClassName("numbersFound")[1].innerHTML = "3";
       }
       console.log(arg.$el);
     }
@@ -95,7 +97,8 @@ export default {
         {this.queryString.includes("&pt=") != true ? (
           <div class="matches">
             <span class="numbersFound">{this.result.doclist.numFound}</span>{" "}
-            {this.result.doclist.numFound > 1 ? <span>matches</span> : <span>match</span>} found in pdf. Displaying{" "}
+            {this.result.doclist.numFound > 1 ? <span>matches</span> : <span>match</span>} found in pdf. Displaying
+            first{" "}
             {this.result.doclist.docs.length < 3 ? (
               <span class="numbersFound">{this.result.doclist.docs.length}</span>
             ) : (
