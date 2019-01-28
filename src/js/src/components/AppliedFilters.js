@@ -48,13 +48,14 @@ export default {
         this.filters = fqFilters;
       }
     },
-    removeSingleFilter(string) {
+    removeSingleFilter(filterString) {
       for (let i = 0; i < this.filters.length; i++) {
-        if (this.filters[i] === string) {
+        if (this.filters[i] === filterString) {
           this.filters.splice(i, 1);
         }
       }
-      var mergedQuery = this.orgQuery;
+
+      let mergedQuery = this.orgQuery;
       if (this.filters.length > 0) {
         if (this.filters[0].includes("&pt=") === true) {
           mergedQuery = mergedQuery + "&d=";
@@ -74,8 +75,8 @@ export default {
       if (filter.includes("&pt=") === true) {
         category = "location";
       } else {
-        var i = filter.indexOf(":");
-        var stringSplit = [filter.slice(0, i), filter.slice(i + 1)];
+        let i = filter.indexOf(":");
+        let stringSplit = [filter.slice(0, i), filter.slice(i + 1)];
         category = stringSplit[0].substring(0, stringSplit[0].indexOf("_"));
       }
       return category;
@@ -107,7 +108,16 @@ export default {
   render(h) {
     return (
       <div class="appliedFilters">
+        {
+          //Don't render them self closing divs unles you really mean it -
+          //go with the short circuit conditional syntaks or use null instead
+        }
         {this.filters.length > 0 ? <div class="headline">Applied Filters:</div> : <div />}
+
+        {
+          //Don't render them self closing divs unles you really mean it -
+          //go with the short circuit conditional syntaks or use null instead
+        }
         {this.filters.length > 0 ? (
           <div class="appliedFilterSelection">
             {this.filters.map(filter => (

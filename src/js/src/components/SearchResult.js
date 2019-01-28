@@ -4,6 +4,8 @@ import ResultMap from "../components/ResultMap";
 
 export default {
   name: "SearchResult",
+  data: () => ({ showingAllSnippets: false }),
+
   props: {
     result: {
       type: Object,
@@ -17,7 +19,10 @@ export default {
   methods: {
     getRecordLink(id, page) {
       return page
-        ? { path: "/record/", query: { page: true, id: encodeURIComponent(id), query: this.queryString } }
+        ? {
+            path: "/record/",
+            query: { page: true, id: encodeURIComponent(id), query: this.queryString }
+          }
         : { path: "/record/", query: { id: encodeURIComponent(id), query: this.queryString } };
     },
     transformDate(date) {
@@ -30,28 +35,15 @@ export default {
       const convertedDate = new Date(date);
       return convertedDate.getFullYear();
     },
-    seeAllHitsInSnippet(arg) {
-      if (arg.$el.getElementsByClassName("seeAllSnippets")[0].innerHTML === "See more hits") {
-        var elements = arg.$el.getElementsByClassName("snippet");
-        for (let i = 0; i < elements.length; i++) {
-          elements[i].style.display = "block";
-        }
-        arg.$el.getElementsByClassName("seeAllSnippets")[0].innerHTML = "See less hits";
-        arg.$el.getElementsByClassName("seeAllSnippets")[1].style.display = "block";
-      } else {
-        var elements = arg.$el.getElementsByClassName("snippet");
-        for (let i = 0; i < elements.length; i++) {
-          elements[i].style.display = "";
-        }
-        arg.$el.getElementsByClassName("seeAllSnippets")[0].innerHTML = "See more hits";
-        arg.$el.getElementsByClassName("seeAllSnippets")[1].style.display = "none";
-      }
-      console.log(arg.$el);
+
+    toggleMoreSnippetsVisibility() {
+      this.showingAllSnippets = !this.showingAllSnippets;
     }
   },
   render(h) {
     //console.log("INDIVIDUAL SEARCH DATA");
     //console.log(this.result);
+    const defaultVisibleSnippets = 4;
     let authors = this.result.doclist.docs["0"].author || ["Unknown"];
     return (
       <div class="searchResult" id={this.result.doclist.docs["0"].loar_id.replace(/:|\s|\//g, "-")}>
@@ -64,8 +56,8 @@ export default {
             <div class="resultInfo">Time</div>
             <div class="timeTitle" />
             <div class="resultDate">
-              From approx <span>{this.transformDate(this.result.doclist.docs["0"].ctime)}</span> years ago (
-              {this.deliverTimeBetween(this.result.doclist.docs["0"].ctime)})
+              From approx <span>{this.transformDate(this.result.doclist.docs["0"].ctime)}</span>{" "}
+              years ago ({this.deliverTimeBetween(this.result.doclist.docs["0"].ctime)})
             </div>
             <div class="placeTitle">Place</div>
             <div class="resultPlace">{this.result.doclist.docs["0"].place_name}</div>
@@ -92,57 +84,67 @@ export default {
             />
           </div>
         </div>
-        {this.queryString.includes("&pt=") != true ? (
+        {this.queryString.includes("&pt=") != true && (
           <div class="matches">
-            <span class="numbersFound">{this.result.doclist.numFound}</span>{" "}
-            {this.result.doclist.numFound > 1 ? <span>matches</span> : <span>match</span>} found in pdf. Displaying{" "}
-            {this.result.doclist.docs.length < 3 ? (
+            <span class="numbersFound">{this.result.doclist.numFound}</span>
+            {this.result.doclist.numFound > 1 ? <span> matches</span> : <span> match </span>}
+            <span>found in pdf. Displaying </span>
+            {this.result.doclist.docs.length < defaultVisibleSnippets ? (
               <span class="numbersFound">{this.result.doclist.docs.length}</span>
             ) : (
-              <span class="numbersFound">3</span>
+              <span class="numbersFound">{defaultVisibleSnippets}</span>
             )}
-            .{" "}
-            {this.result.doclist.docs.length > 3 ? (
-              <span class="seeAllSnippets" onClick={e => this.seeAllHitsInSnippet(this)}>
-                See more hits
+            .
+            {this.result.doclist.docs.length > defaultVisibleSnippets && (
+              <span class="seeAllSnippets" onClick={e => this.toggleMoreSnippetsVisibility()}>
+                {this.showingAllSnippets ? <span>See less hits</span> : <span>See more hits</span>}
               </span>
-            ) : (
-              <span class="AllSnippets" />
             )}
           </div>
-        ) : (
-          <div />
         )}
 
-        {this.queryString.includes("&pt=") != true ? (
-          this.result.doclist.docs.map(snippets => (
-            <div class="snippet">
+        {this.queryString.includes("&pt=") != true &&
+          this.result.doclist.docs.map((snippets, index) => (
+            <div
+              class="snippet"
+              style={
+                index > defaultVisibleSnippets - 1 && !this.showingAllSnippets
+                  ? "display:none"
+                  : "display:block"
+              }
+            >
               <div class="chapterTitle">chapter </div>
-              <HighlightedChapter chapterString={snippets.chapter} query={this.result.query} />{" "}
-              <div class="pageTitle">page </div>{" "}
-              {snippets.page == 0 ? <div class="pageNumber">1</div> : <div class="pageNumber">{snippets.page - 1}</div>}
+              <HighlightedChapter chapterString={snippets.chapter} query={this.result.query} />
+              <div class="pageTitle">page </div>
+              {snippets.page == 0 ? (
+                <div class="pageNumber">1</div>
+              ) : (
+                <div class="pageNumber">{snippets.page - 1}</div>
+              )}
               <ul>
-                <HighlightedContent contentArray={snippets.highLightSnippets} query={this.result.query} />
+                <HighlightedContent
+                  contentArray={snippets.highLightSnippets}
+                  query={this.result.query}
+                />
               </ul>
               <router-link to={this.getRecordLink(snippets.id, true, this.result.query)}>
                 <span>⮊</span> Go to hit
               </router-link>
             </div>
-          ))
-        ) : (
-          <div />
-        )}
+          ))}
         <router-link
           class="entirePdfLink"
           to={this.getRecordLink(this.result.doclist.docs["0"].id, true, this.result.query)}
         >
           See entire pdf
         </router-link>
-        <div class="seeAllSnippetsBottomContainer">
-          <span class="seeAllSnippets" onClick={e => this.seeAllHitsInSnippet(this)}>
-            See less hits
-          </span>
-        </div>
+        {this.showingAllSnippets && (
+          <div class="seeAllSnippetsBottomContainer">
+            <span class="seeAllSnippets" onClick={e => this.toggleMoreSnippetsVisibility()}>
+              {this.showingAllSnippets ? <span>See less hits</span> : <span>See more hits</span>}
+            </span>
+          </div>
+        )}
       </div>
     );
   }
