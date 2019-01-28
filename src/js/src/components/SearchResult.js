@@ -56,7 +56,7 @@ export default {
             <div class="resultInfo">Time</div>
             <div class="timeTitle" />
             <div class="resultDate">
-              From approx <span>{this.transformDate(this.result.doclist.docs["0"].ctime)}</span>{" "}
+              From approx <span>{this.transformDate(this.result.doclist.docs["0"].ctime)} </span>
               years ago ({this.deliverTimeBetween(this.result.doclist.docs["0"].ctime)})
             </div>
             <div class="placeTitle">Place</div>
