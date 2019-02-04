@@ -16,26 +16,28 @@ export default {
     }
   },
 
-  data: () => ({}),
+  data: () => ({ mapNode: {}, resultmap: {}, marker: {} }),
 
   methods: {
     createMap(coordinateSet, id) {
       if (coordinateSet === "Unknown" || undefined) {
         document.getElementById(this.fixedId(id)).innerHTML = "<div class='noShowMap'>No coordinates to show :(</div>";
       } else {
-        var coordinates = coordinateSet.split(",").reverse();
-        const L = require("leaflet");
-        let DefaultIcon = L.icon({
+        let coordinates = coordinateSet.split(",").reverse();
+        this.mapNode = require("leaflet");
+        let DefaultIcon = this.mapNode.icon({
           iconUrl: icon,
           shadowUrl: iconShadow
         });
-        L.Marker.prototype.options.icon = DefaultIcon;
-        let resultmap = L.map(this.fixedId(id));
-        resultmap.setView(coordinates, 9);
-        L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
-          attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
-        }).addTo(resultmap);
-        let marker = L.marker(coordinates).addTo(resultmap);
+        this.mapNode.Marker.prototype.options.icon = DefaultIcon;
+        this.resultmap = this.mapNode.map(this.fixedId(id));
+        this.resultmap.setView(coordinates, 9);
+        this.mapNode
+          .tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+            attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
+          })
+          .addTo(this.resultmap);
+        this.marker = this.mapNode.marker(coordinates).addTo(this.resultmap);
       }
     },
     fixedId(id) {
@@ -50,6 +52,15 @@ export default {
     this.createMap(this.coordinates, this.id);
   },
 
+  watch: {
+    coordinates: function() {
+      let updatedCoordinates = this.coordinates.split(",").reverse();
+      this.resultmap.setView(updatedCoordinates, 9);
+      let newLatLng = new this.mapNode.LatLng(updatedCoordinates[0], updatedCoordinates[1]);
+      this.marker.setLatLng(newLatLng);
+    }
+  },
+
   beforeMount() {
     if (document.getElementById(this.fixedId(this.id))) {
       var element = document.getElementById(this.fixedId(this.id));
@@ -58,6 +69,6 @@ export default {
   },
 
   render(h) {
-    return <div class="resultMap" id={this.fixedId(this.id)} />;
+    return <div class="resultMap" id={this.fixedId(this.id)} data-set-coordinates={this.coordinates} />;
   }
 };
