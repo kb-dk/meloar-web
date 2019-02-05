@@ -9,6 +9,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const OptimizeCSSPlugin = require("optimize-css-assets-webpack-plugin");
+const uglifyJsContents = require("uglify-js");
 
 const env =
   process.env.NODE_ENV === "testing"
@@ -74,6 +75,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: "dependency"
     }),
+
     // keep module.id stable when vender modules does not change
     new webpack.HashedModuleIdsPlugin(),
 
@@ -115,6 +117,14 @@ const webpackConfig = merge(baseWebpackConfig, {
         from: path.resolve(__dirname, "../static"),
         to: config.build.assetsSubDirectory,
         ignore: [".*"]
+      },
+      {
+        from: "../js/pdfviewer",
+        to: config.build.assetsSubDirectory + "/pdfviewer"
+        //Disabled minifier due to minify errors with viewer code - investigate later
+        /*transform: function(fileContent, path) {
+          return uglifyJsContents.minify(fileContent.toString()).code.toString();
+        }*/
       }
     ])
   ]
