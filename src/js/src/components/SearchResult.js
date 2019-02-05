@@ -80,7 +80,7 @@ export default {
           <div class="mapContainer">
             <ResultMap
               id={this.result.doclist.docs["0"].id}
-              coordinates={this.result.doclist.docs["0"].place_coordinates || "Unknown"}
+              coordinateSet={this.result.doclist.docs["0"].place_coordinates || "Unknown"}
             />
           </div>
         </div>

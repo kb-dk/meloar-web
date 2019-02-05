@@ -6,7 +6,7 @@ export default {
   name: "ResultMap",
 
   props: {
-    coordinates: {
+    coordinateSet: {
       type: String,
       required: true
     },
@@ -16,28 +16,28 @@ export default {
     }
   },
 
-  data: () => ({ mapNode: {}, resultmap: {}, marker: {} }),
+  data: () => ({ hasCoordinates: true }),
 
   methods: {
     createMap(coordinateSet, id) {
       if (coordinateSet === "Unknown" || undefined) {
-        document.getElementById(this.fixedId(id)).innerHTML = "<div class='noShowMap'>No coordinates to show :(</div>";
+        this.hasCoordinates = false;
       } else {
         let coordinates = coordinateSet.split(",").reverse();
-        this.mapNode = require("leaflet");
-        let DefaultIcon = this.mapNode.icon({
+        let mapNode = require("leaflet");
+        let DefaultIcon = mapNode.icon({
           iconUrl: icon,
           shadowUrl: iconShadow
         });
-        this.mapNode.Marker.prototype.options.icon = DefaultIcon;
-        this.resultmap = this.mapNode.map(this.fixedId(id));
-        this.resultmap.setView(coordinates, 9);
-        this.mapNode
+        mapNode.Marker.prototype.options.icon = DefaultIcon;
+        let resultmap = mapNode.map(this.fixedId(id));
+        resultmap.setView(coordinates, 9);
+        mapNode
           .tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
             attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
           })
-          .addTo(this.resultmap);
-        this.marker = this.mapNode.marker(coordinates).addTo(this.resultmap);
+          .addTo(resultmap);
+        mapNode.marker(coordinates).addTo(resultmap);
       }
     },
     fixedId(id) {
@@ -49,26 +49,18 @@ export default {
   },
 
   mounted() {
-    this.createMap(this.coordinates, this.id);
-  },
-
-  watch: {
-    coordinates: function() {
-      let updatedCoordinates = this.coordinates.split(",").reverse();
-      this.resultmap.setView(updatedCoordinates, 9);
-      let newLatLng = new this.mapNode.LatLng(updatedCoordinates[0], updatedCoordinates[1]);
-      this.marker.setLatLng(newLatLng);
-    }
-  },
-
-  beforeMount() {
-    if (document.getElementById(this.fixedId(this.id))) {
-      var element = document.getElementById(this.fixedId(this.id));
-      element.id = this.fixedId(this.id + "-obsolete");
-    }
+    this.createMap(this.coordinateSet, this.id);
   },
 
   render(h) {
-    return <div class="resultMap" id={this.fixedId(this.id)} data-set-coordinates={this.coordinates} />;
+    return (
+      <div>
+        {this.hasCoordinates ? (
+          <div class="resultMap" id={this.fixedId(this.id)} />
+        ) : (
+          <div class="noShowMap">No coordinates to show :(</div>
+        )}
+      </div>
+    );
   }
 };

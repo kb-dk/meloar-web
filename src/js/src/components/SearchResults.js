@@ -52,7 +52,9 @@ export default {
                     if (i % 2 == 0) {
                       return (
                         <div
-                          onClick={e => this.a.methods.filterFromFacets({ name }, { key }, { props })}
+                          onClick={e =>
+                            this.a.methods.filterFromFacets({ name }, { key }, { props })
+                          }
                           class="facetItem"
                         >
                           {name || "Unknown"}
@@ -76,10 +78,18 @@ export default {
           ) : (
             <span class="numbersFound">0</span>
           )}{" "}
-          {props.searchResults.length > 1 || props.searchResults.length === 0 ? <span>pdfs</span> : <span>pdf</span>}
+          {props.searchResults.length > 1 || props.searchResults.length === 0 ? (
+            <span>pdfs</span>
+          ) : (
+            <span>pdf</span>
+          )}
         </div>
-        {props.searchResults.map(result => (
-          <SearchResult result={result} queryString={router.history.current.params.query} />
+        {props.searchResults.map((result, index) => (
+          <SearchResult
+            key={router.history.current.params.query + "_" + index}
+            result={result}
+            queryString={router.history.current.params.query}
+          />
         ))}
       </div>
     );
