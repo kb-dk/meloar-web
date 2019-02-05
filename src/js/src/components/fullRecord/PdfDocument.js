@@ -15,9 +15,10 @@ export default {
 
   methods: {
     getUrl() {
+      let encodedURL = "/api/meloar/pdf?url=" + this.record.doc.external_resource[0];
       return (
-        "/api/meloar/pdf?url=" +
-        this.record.doc.external_resource[0] +
+        "static/pdfviewer/web/viewer.html?file=" +
+        encodeURIComponent(encodedURL) +
         "#search=" +
         searchState.query +
         "&page=" +
