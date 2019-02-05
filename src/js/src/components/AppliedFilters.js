@@ -19,10 +19,8 @@ export default {
   methods: {
     findFilters(query) {
       if (query === "") {
-        console.log(this);
         query = this.$route.params.query;
       }
-      console.log(query);
       query = decodeURIComponent(query);
       // Create array with all the filters;
       let fqFilters = query.split("&fq=");
