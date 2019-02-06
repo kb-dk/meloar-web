@@ -87,7 +87,7 @@ export default {
         {this.queryString.includes("&pt=") != true && (
           <div class="matches">
             <span class="numbersFound">{this.result.doclist.numFound}</span>
-            {this.result.doclist.numFound > 1 ? <span> matches</span> : <span> match </span>}
+            {this.result.doclist.numFound > 1 ? <span> matches </span> : <span> match </span>}
             <span>found in pdf. Displaying </span>
             {this.result.doclist.docs.length < defaultVisibleSnippets ? (
               <span class="numbersFound">{this.result.doclist.docs.length}</span>
@@ -107,35 +107,21 @@ export default {
           this.result.doclist.docs.map((snippets, index) => (
             <div
               class="snippet"
-              style={
-                index > defaultVisibleSnippets - 1 && !this.showingAllSnippets
-                  ? "display:none"
-                  : "display:block"
-              }
+              style={index > defaultVisibleSnippets - 1 && !this.showingAllSnippets ? "display:none" : "display:block"}
             >
               <div class="chapterTitle">chapter </div>
               <HighlightedChapter chapterString={snippets.chapter} query={this.result.query} />
               <div class="pageTitle">page </div>
-              {snippets.page == 0 ? (
-                <div class="pageNumber">1</div>
-              ) : (
-                <div class="pageNumber">{snippets.page - 1}</div>
-              )}
+              {snippets.page == 0 ? <div class="pageNumber">1</div> : <div class="pageNumber">{snippets.page - 1}</div>}
               <ul>
-                <HighlightedContent
-                  contentArray={snippets.highLightSnippets}
-                  query={this.result.query}
-                />
+                <HighlightedContent contentArray={snippets.highLightSnippets} query={this.result.query} />
               </ul>
               <router-link to={this.getRecordLink(snippets.id, true)}>
                 <span>⮊</span> Go to hit
               </router-link>
             </div>
           ))}
-        <router-link
-          class="entirePdfLink"
-          to={this.getRecordLink(this.result.doclist.docs["0"].id, false)}
-        >
+        <router-link class="entirePdfLink" to={this.getRecordLink(this.result.doclist.docs["0"].id, false)}>
           See entire pdf
         </router-link>
         {this.showingAllSnippets && (
