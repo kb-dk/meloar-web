@@ -54,7 +54,7 @@ export default {
 
   render(h) {
     return (
-      <div>
+      <div class="simpleMapContainer">
         {this.hasCoordinates ? (
           <div class="resultMap" id={this.fixedId(this.id)} />
         ) : (

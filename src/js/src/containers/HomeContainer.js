@@ -12,6 +12,11 @@ export default {
   render(h) {
     return (
       <div class="homeContainer">
+        <div class="titleContainer">
+          <h2>Meloar</h2>
+          <hr style="width:300px" />
+          <span>Fund & fortidsminder</span>
+        </div>
         <SearchBox />
         <SearchMap />
         <div class="simpleNavigation">
