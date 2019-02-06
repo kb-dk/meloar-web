@@ -127,14 +127,14 @@ export default {
                   query={this.result.query}
                 />
               </ul>
-              <router-link to={this.getRecordLink(snippets.id, true, this.result.query)}>
+              <router-link to={this.getRecordLink(snippets.id, true)}>
                 <span>⮊</span> Go to hit
               </router-link>
             </div>
           ))}
         <router-link
           class="entirePdfLink"
-          to={this.getRecordLink(this.result.doclist.docs["0"].id, true, this.result.query)}
+          to={this.getRecordLink(this.result.doclist.docs["0"].id, false)}
         >
           See entire pdf
         </router-link>
