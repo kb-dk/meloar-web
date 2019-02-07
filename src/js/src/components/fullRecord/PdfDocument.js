@@ -1,4 +1,5 @@
 import searchState from "../../store/searchStore.js";
+import router from "../../router/index.js";
 
 export default {
   name: "PdfDocument",
@@ -14,14 +15,20 @@ export default {
 
   methods: {
     getUrl() {
-      return (
-        "/api/meloar/pdf?url=" +
-        this.record.doc.external_resource[0] +
-        "#search=" +
-        searchState.query +
-        "&page=" +
-        this.getSinglePageNumber()
+      const proxyURL = encodeURIComponent(
+        "/api/meloar/pdf?url=" + this.record.doc.external_resource[0]
       );
+      const viewerURL = "static/pdfviewer/web/viewer.html?file=";
+      const pageParams = this.singlePage
+        ? "#search=" + searchState.query + "&page=" + this.getSinglePageNumber()
+        : "";
+      return viewerURL + proxyURL + pageParams;
+    },
+
+    createSearchLink() {
+      let q = router.history.current.query.query;
+      q = q.split("&query=").pop();
+      return "/search/" + q;
     },
 
     getSinglePageNumber() {
@@ -31,8 +38,13 @@ export default {
 
   render(h) {
     return (
-      <div class="iframe-container">
-        <iframe src={this.getUrl()} />
+      <div>
+        <router-link to={this.createSearchLink()} class="backToSearch">
+          back to searching.
+        </router-link>
+        <div class="iframe-container">
+          <iframe src={this.getUrl()} />
+        </div>
       </div>
     );
   },

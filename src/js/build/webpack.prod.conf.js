@@ -10,6 +10,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const HtmlWebpackStringReplacePlugin = require("html-webpack-string-replace-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const OptimizeCSSPlugin = require("optimize-css-assets-webpack-plugin");
+const uglifyJsContents = require("uglify-js");
 
 const env =
   process.env.NODE_ENV === "testing"
@@ -120,6 +121,14 @@ const webpackConfig = merge(baseWebpackConfig, {
         from: path.resolve(__dirname, "../static"),
         to: config.build.assetsSubDirectory,
         ignore: [".*"]
+      },
+      {
+        from: "../js/pdfviewer",
+        to: config.build.assetsSubDirectory + "/pdfviewer"
+        //Disabled minifier due to minify errors with viewer code - investigate later
+        /*transform: function(fileContent, path) {
+          return uglifyJsContents.minify(fileContent.toString()).code.toString();
+        }*/
       }
     ])
   ]

@@ -18,9 +18,7 @@ export default {
     return (
       <div class="searchContainer">
         {this.searchError && (
-          <div class="searchError">
-            Something went terribly wrong with your search. Please try again.
-          </div>
+          <div class="searchError">Something went terribly wrong with your search. Please try again.</div>
         )}
         <div class="labsContainer">
           <a href="http://labs.kb.dk/">Back to labs.kb.dk</a>

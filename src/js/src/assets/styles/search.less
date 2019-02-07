@@ -4,7 +4,7 @@
   margin-right: auto;
   max-width: 500px;
   min-width: 200px;
-  padding-top: 250px;
+  padding-top: 59px;
   -webkit-transition: all 500ms ease-out 0s;
   -moz-transition: all 500ms ease-out 0s;
   -o-transition: all 500ms ease-out 0s;
@@ -141,6 +141,14 @@
   max-width: 1200px;
 }
 
+.noResultContainer {
+  display: block;
+  margin: auto;
+  text-align: center;
+  margin-top: 55px;
+  text-transform: uppercase;
+}
+
 .searchResult {
   padding-top: 1px;
   margin-top: 2em;
@@ -180,11 +188,38 @@
   overflow: hidden;
 }
 
+.titleContainer {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 500px;
+  min-width: 200px;
+  padding-top: 100px;
+}
+
+.titleContainer h2 {
+  font-size: 300%;
+  text-transform: uppercase;
+  text-align: center;
+  display: block;
+}
+
+.titleContainer span {
+  text-align: center;
+  display: block;
+}
+
+.simpleMapContainer {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+  height: 100%;
+}
+
 .mapContainer:after {
   z-index: 1000;
   display: block;
   height: 150%;
-  top: -25%;
+  top: -125%;
   left: -110px;
   transform: rotateZ(-17deg);
   -webkit-box-sizing: border-box;
@@ -217,6 +252,44 @@
   padding: 10px;
   background-color: rgba(150, 150, 150, 0.1);
   border-left: 5px solid rgba(30, 30, 30, 0.2);
+}
+
+//.searchResult .snippet:nth-child(n + 6) {
+// display: none;
+//}
+
+.seeAllSnippets {
+  margin-left: 15px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0);
+  -webkit-transition: all 500ms ease-out 0s;
+  -moz-transition: all 500ms ease-out 0s;
+  -o-transition: all 500ms ease-out 0s;
+  transition: all 500ms ease-out 0s;
+}
+
+.seeAllSnippetsBottomContainer {
+  display: inline-block;
+}
+
+.seeAllSnippetsBottomContainer .seeAllSnippets {
+  color: rgba(30, 30, 30, 0.5);
+  font-size: 80%;
+  text-transform: uppercase;
+}
+
+.seeAllSnippets:hover {
+  color: rgb(30, 30, 30, 0.6);
+  -webkit-transition: all 500ms ease-out 0s;
+  -moz-transition: all 500ms ease-out 0s;
+  -o-transition: all 500ms ease-out 0s;
+  transition: all 500ms ease-out 0s;
+}
+
+.seeAllSnippets:before {
+  content: "⮊";
+  padding-right: 3px;
+  color: rgb(30, 30, 30, 1);
 }
 
 .snippet .chapterTitle,
@@ -354,13 +427,41 @@
 }
 
 .pdfMetadata {
-  margin-top: 25px;
-  margin-bottom: 25px;
+  max-height: 35px;
+  padding: 5px;
+  margin-top: 45px;
+  z-index: 1;
+  left: calc(50% - 65px);
+  width: 110px;
   text-align: center;
+  position: absolute;
+  height: 15px;
+  overflow: hidden;
 }
 
-.pdfMetadata div {
-  margin-top: 5px;
+.pdfMetadata:hover {
+  max-height: 500px;
+  left: calc(50% - 260px);
+  width: 500px;
+  height: auto;
+  //overflow: auto;
+
+  background-color: rgba(175, 175, 175, 1);
+  -webkit-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.pdfMetadata .information {
+  padding-top: 5px;
+  height: 20px;
+  background-color: rgba(230, 230, 230, 0.8);
+  text-transform: uppercase;
+}
+
+.pdfSpecs {
+  background-color: rgba(230, 230, 230, 0.8);
+  padding: 10px;
+  text-align: left;
 }
 
 .pdfMetadata div span:first-child {
@@ -598,7 +699,7 @@
 }
 
 .entirePdfLink {
-  display: block;
+  display: inline-block;
   text-decoration: none;
   color: white;
   text-transform: uppercase;
@@ -610,7 +711,7 @@
 
 .noShowMap {
   text-align: center;
-  margin-top: 105px !important;
+  padding-top: 105px !important;
 }
 
 .mapSearch {
@@ -632,4 +733,62 @@
   background-color: rgba(30, 30, 30, 0.3);
   color: white;
   line-height: 8px;
+}
+
+.filterEntity div {
+  display: inline-block;
+  padding: 4px;
+}
+
+.filterEntity {
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  -webkit-box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.appliedFilterSelection .filterEntity:last-of-type {
+  margin-right: 0px;
+}
+
+.appliedFilterSelection .filterEntity:first-of-type {
+  margin-left: 0px;
+}
+
+.filterEntity .filterCategory {
+  text-transform: uppercase;
+  color: rgba(30, 30, 30, 0.5);
+}
+
+.filterEntity .filterColon {
+  color: rgba(30, 30, 30, 0.5);
+}
+
+.filterEntity .filterClose {
+  color: rgba(30, 30, 30, 0.5);
+  font-size: 70%;
+  position: relative;
+  top: -2px;
+  margin-left: 3px;
+}
+
+.appliedFilterSelection {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.backToSearch {
+  text-transform: uppercase;
+  font-size: 80%;
+  left: calc(50% - 105px);
+  width: 200px;
+  text-align: center;
+  color: rgba(30, 30, 30, 0.5);
+  text-decoration: none;
+  padding-top: 18px;
+  margin-top: 0px;
+  position: absolute;
 }

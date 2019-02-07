@@ -6,7 +6,7 @@ export default {
   name: "ResultMap",
 
   props: {
-    coordinates: {
+    coordinateSet: {
       type: String,
       required: true
     },
@@ -16,26 +16,28 @@ export default {
     }
   },
 
-  data: () => ({}),
+  data: () => ({ hasCoordinates: true }),
 
   methods: {
     createMap(coordinateSet, id) {
       if (coordinateSet === "Unknown" || undefined) {
-        document.getElementById(this.fixedId(id)).innerHTML = "<div class='noShowMap'>No coordinates to show :(</div>";
+        this.hasCoordinates = false;
       } else {
-        var coordinates = coordinateSet.split(",").reverse();
-        const L = require("leaflet");
-        let DefaultIcon = L.icon({
+        let coordinates = coordinateSet.split(",").reverse();
+        let mapNode = require("leaflet");
+        let DefaultIcon = mapNode.icon({
           iconUrl: icon,
           shadowUrl: iconShadow
         });
-        L.Marker.prototype.options.icon = DefaultIcon;
-        let resultmap = L.map(this.fixedId(id));
+        mapNode.Marker.prototype.options.icon = DefaultIcon;
+        let resultmap = mapNode.map(this.fixedId(id));
         resultmap.setView(coordinates, 9);
-        L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
-          attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
-        }).addTo(resultmap);
-        let marker = L.marker(coordinates).addTo(resultmap);
+        mapNode
+          .tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+            attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
+          })
+          .addTo(resultmap);
+        mapNode.marker(coordinates).addTo(resultmap);
       }
     },
     fixedId(id) {
@@ -47,17 +49,18 @@ export default {
   },
 
   mounted() {
-    this.createMap(this.coordinates, this.id);
-  },
-
-  beforeMount() {
-    if (document.getElementById(this.fixedId(this.id))) {
-      var element = document.getElementById(this.fixedId(this.id));
-      element.id = this.fixedId(this.id + "-obsolete");
-    }
+    this.createMap(this.coordinateSet, this.id);
   },
 
   render(h) {
-    return <div class="resultMap" id={this.fixedId(this.id)} />;
+    return (
+      <div class="simpleMapContainer">
+        {this.hasCoordinates ? (
+          <div class="resultMap" id={this.fixedId(this.id)} />
+        ) : (
+          <div class="noShowMap">No coordinates to show :(</div>
+        )}
+      </div>
+    );
   }
 };
