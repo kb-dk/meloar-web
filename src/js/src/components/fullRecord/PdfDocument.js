@@ -15,16 +15,16 @@ export default {
 
   methods: {
     getUrl() {
-      let encodedURL = "/api/meloar/pdf?url=" + this.record.doc.external_resource[0];
-      return (
-        "static/pdfviewer/web/viewer.html?file=" +
-        encodeURIComponent(encodedURL) +
-        "#search=" +
-        searchState.query +
-        "&page=" +
-        this.getSinglePageNumber()
+      const proxyURL = encodeURIComponent(
+        "/api/meloar/pdf?url=" + this.record.doc.external_resource[0]
       );
+      const viewerURL = "static/pdfviewer/web/viewer.html?file=";
+      const pageParams = this.singlePage
+        ? "#search=" + searchState.query + "&page=" + this.getSinglePageNumber()
+        : "";
+      return viewerURL + proxyURL + pageParams;
     },
+
     createSearchLink() {
       let q = router.history.current.query.query;
       q = q.split("&query=").pop();
