@@ -18,18 +18,15 @@ export default {
     return (
       <div class="searchContainer">
         {this.searchError && (
-          <div class="searchError">Something went terribly wrong with your search. Please try again.</div>
+          <div class="searchError">
+            Something went terribly wrong with your search. Please try again.
+          </div>
         )}
         <div class="labsContainer">
           <a href="http://labs.kb.dk/">Back to labs.kb.dk</a>
         </div>
         <SearchBox placeholder={this.query} class="notFrontpage" />
-        <SearchResults
-          searchResults={this.searchResult}
-          facets={this.facets}
-          matchCount={this.matchCount}
-          documentCount={this.documentCount}
-        />
+        <SearchResults searchResults={this.searchResult} facets={this.facets} hits={this.hits} />
       </div>
     );
   },
@@ -40,25 +37,16 @@ export default {
     setFacets(facets) {
       this.facets = facets;
     },
-    setMatchCount(count) {
-      this.matchCount = count;
+    setHits(hits) {
+      this.hits = hits;
     },
-
-    setDocumentCount(count) {
-      this.documentCount = count;
-    },
-
     getFacets(searchResults) {
       let facets = JSON.parse(JSON.stringify(searchResults.facet_counts.facet_fields));
       return facets;
     },
-    getMatchCount(searchResults) {
-      let matchCount = searchResults.grouped.loar_id.matches.toString();
-      return matchCount;
-    },
-    getDocumentCount(searchResults) {
-      let documentCount = searchResults.stats.stats_fields.loar_id.cardinality.toString();
-      return documentCount;
+    getHits(searchResults) {
+      let hits = searchResults.grouped.loar_id.matches.toString();
+      return hits;
     },
     setErrorStatus() {
       this.searchError = true;
@@ -79,8 +67,7 @@ export default {
         next(vm => {
           vm.setSearchResult(searchService.structureSearchResult(searchResult));
           vm.setFacets(vm.getFacets(searchResult));
-          vm.setMatchCount(vm.getMatchCount(searchResult));
-          vm.setDocumentCount(vm.getDocumentCount(searchResult));
+          vm.setHits(vm.getHits(searchResult));
         });
       })
       .catch(reason => {
@@ -98,8 +85,7 @@ export default {
           searchState.query = to.params.query;
           this.setSearchResult(searchService.structureSearchResult(searchResult));
           this.setFacets(this.getFacets(searchResult));
-          vm.setMatchCount(vm.getMatchCount(searchResult));
-          vm.setDocumentCount(vm.getDocumentCount(searchResult));
+          this.setHits(this.getHits(searchResult));
           next();
         })
         .catch(reason => {

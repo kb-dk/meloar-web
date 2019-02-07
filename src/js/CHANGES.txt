@@ -1,0 +1,15 @@
+2.0.1
+==========
+- Corrected bad merge in version 2.0.0
+
+2.0.0
+==========
+- Internally hosted viewer
+- Much better facet handling and selected filters are now displayed 
+- Display version number in DOM
+- Fixed bug with page search triggering even if user requested the whole PDF
+- New front page with added product caption
+- Restricted number of visible hits in each PDF and implemented toggler
+- Better wording in hit count by line 
+- Better styling of meta data in full record
+- 
