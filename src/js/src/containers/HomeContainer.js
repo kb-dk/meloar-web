@@ -25,7 +25,7 @@ export default {
           </router-link>
           <br />
           <br />
-          <a href="http://labs.kb.dk/">Back to labs.kb.dk</a>
+          <a href="https://labs.kb.dk/">Back to labs.kb.dk</a>
         </div>
       </div>
     );
