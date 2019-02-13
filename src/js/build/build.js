@@ -10,8 +10,6 @@ const chalk = require("chalk");
 const webpack = require("webpack");
 const config = require("../config");
 const webpackConfig = require("./webpack.prod.conf");
-const mkdirp = require("mkdirp");
-const fs = require("fs");
 
 const spinner = ora("building for production...");
 spinner.start();
@@ -32,23 +30,10 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
     );
 
     if (stats.hasErrors()) {
-      console.log("config.build.assetsRoot", config.build.assetsRoot);
-      console.log("config.build.assetsSubDirectory", config.build.assetsSubDirectory);
-
       console.log(chalk.red("  Build failed with errors.\n"));
       process.exit(1);
     }
 
-    mkdirp(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
-      if (err) throw err;
-      // path exists unless there was an error
-      fs.closeSync(
-        fs.openSync(
-          path.join(config.build.assetsRoot, config.build.assetsSubDirectory, ".gitkeep"),
-          "w"
-        )
-      );
-    });
     console.log(chalk.cyan("  Build complete.\n"));
     console.log(
       chalk.yellow(
