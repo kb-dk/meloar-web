@@ -35,6 +35,10 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
       console.log(chalk.red("  Build failed with errors.\n"));
       process.exit(1);
     }
+
+    console.log("config.build.assetsRoot", config.build.assetsRoot);
+    console.log("config.build.assetsSubDirectory", config.build.assetsSubDirectory);
+
     mkdirp(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
       if (err) throw err;
       // path exists unless there was an error
