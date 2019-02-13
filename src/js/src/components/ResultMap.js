@@ -32,6 +32,7 @@ export default {
         mapNode.Marker.prototype.options.icon = DefaultIcon;
         let resultmap = mapNode.map(this.fixedId(id));
         resultmap.setView(coordinates, 9);
+        //If https problems occur, try https://a.tile.openstreetmap.org/{z}/{x}/{y}.png instead.
         mapNode
           .tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
             attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
