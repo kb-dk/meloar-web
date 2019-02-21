@@ -138,6 +138,23 @@ body {
   background-attachment: fixed;
 }
 
+.homeContainer {
+  width: 100%;
+  height: 100vh;
+}
+
+.homeContainer::after {
+  content:'';
+  width: 100%;
+  height: 100vh;
+  background: url('../img/background.jpg');
+  opacity:0.2;
+  position: absolute;
+  z-index: -1;
+  top:0px;
+
+}
+
 .simpleNavigation {
   display: block;
   width: 300px;
