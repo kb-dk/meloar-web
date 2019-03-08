@@ -21,7 +21,7 @@ export default {
           <div class="searchError">Something went terribly wrong with your search. Please try again.</div>
         )}
         <div class="labsContainer">
-          <a href="https://labs.kb.dk/">Back to labs.kb.dk</a>
+          <a href="http://labs.kb.dk/">Back to labs.kb.dk</a>
         </div>
         <SearchBox placeholder={this.query} class="notFrontpage" />
         <SearchResults searchResults={this.searchResult} facets={this.facets} hits={this.hits} />
