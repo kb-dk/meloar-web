@@ -33,8 +33,9 @@ export default {
         let resultmap = mapNode.map(this.fixedId(id));
         resultmap.setView(coordinates, 9);
         //If https problems occur, try https://a.tile.openstreetmap.org/{z}/{x}/{y}.png instead.
+        //Old access point: https://{s}.tile.osm.org/{z}/{x}/{y}.png
         mapNode
-          .tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+          .tileLayer("https://a.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
           })
           .addTo(resultmap);
