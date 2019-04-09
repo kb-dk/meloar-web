@@ -126,13 +126,7 @@ body {
     rgba(240, 240, 240, 1) 66%,
     rgba(245, 245, 245, 1) 100%
   );
-  background: linear-gradient(
-    135deg,
-    rgba(213, 246, 240, 1) 0%,
-    rgba(230, 230, 230, 1) 33%,
-    rgba(240, 240, 240, 1) 66%,
-    rgba(245, 245, 245, 1) 100%
-  );
+  background: linear-gradient(135deg, rgba(213, 246, 240, 1) 0%, rgba(230, 230, 230, 1) 33%, rgba(240, 240, 240, 1) 66%, rgba(245, 245, 245, 1) 100%);
   color: rgba(30, 30, 30, 1);
   font-family: "Trebuchet MS", "Ubuntu";
   background-attachment: fixed;
@@ -144,16 +138,15 @@ body {
 }
 
 .homeContainer::after {
-  content:'';
+  content: "";
   width: 100%;
   height: 100vh;
-  background: url('../img/background.jpg');
-  background-size:cover;
-  opacity:0.2;
+  //background: url('../img/background.jpg');
+  background-size: cover;
+  opacity: 0.2;
   position: absolute;
   z-index: -1;
-  top:0px;
-
+  top: 0px;
 }
 
 .simpleNavigation {

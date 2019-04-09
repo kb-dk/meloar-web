@@ -1,5 +1,5 @@
-import SearchBox from "../components/SearchBox";
-import SearchMap from "../components/SearchMap";
+import SearchBox from "../components/SearchBox"
+import SearchMap from "../components/SearchMap"
 
 /**
  * Home
@@ -15,7 +15,7 @@ export default {
         <div class="titleContainer">
           <h2>Meloar</h2>
           <hr style="width:300px" />
-          <span>Fund & fortidsminder</span>
+          <span>Kirker</span>
         </div>
         <SearchBox />
         <SearchMap />
@@ -28,6 +28,6 @@ export default {
           <a href="http://labs.kb.dk/">Back to labs.kb.dk</a>
         </div>
       </div>
-    );
+    )
   }
-};
+}
