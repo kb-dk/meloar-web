@@ -15,7 +15,7 @@ export default {
 
   methods: {
     getUrl() {
-      const proxyURL = encodeURIComponent("/api/resource/meloar/kirker?url=" + this.record.doc.external_resource[0])
+      const proxyURL = encodeURIComponent("/api/resource/meloar/folkeskole?url=" + this.record.doc.external_resource[0])
       const viewerURL = "static/pdfviewer/web/viewer.html?file="
       const pageParams = this.singlePage ? "#search=" + searchState.query + "&page=" + this.getSinglePageNumber() : ""
       return viewerURL + proxyURL + pageParams

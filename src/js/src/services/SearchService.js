@@ -11,7 +11,7 @@ export default {
     } else {
       searchState.queryDisplay = query
     }
-    const searchUrl = "/api/discovery/meloar/kirker?group.field=loar_id&group.limit=50&group=true&q=" + query
+    const searchUrl = "/api/discovery/meloar/folkeskole?group.field=loar_id&group.limit=50&group=true&q=" + query
     return axios
       .get(searchUrl)
       .then(response => {
