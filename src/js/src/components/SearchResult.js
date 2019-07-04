@@ -1,6 +1,6 @@
 import HighlightedChapter from "../components/HighlightedChapter";
 import HighlightedContent from "../components/HighlightedContent";
-import ResultMap from "../components/ResultMap";
+import Thumbnail from "../components/Thumbnail";
 
 export default {
   name: "SearchResult",
@@ -59,8 +59,6 @@ export default {
               From approx <span>{this.transformDate(this.result.doclist.docs["0"].ctime)} </span>
               years ago ({this.deliverTimeBetween(this.result.doclist.docs["0"].ctime)})
             </div>
-            <div class="placeTitle">Place</div>
-            <div class="resultPlace">{this.result.doclist.docs["0"].place_name}</div>
             <div class="authorContainer">
               <div class="authorTitle">Authors:&nbsp;</div>
               {authors.map(function(name, i, arr) {
@@ -78,10 +76,7 @@ export default {
             </div>
           </div>
           <div class="mapContainer">
-            <ResultMap
-              id={this.result.doclist.docs["0"].id}
-              coordinateSet={this.result.doclist.docs["0"].place_coordinates || "Unknown"}
-            />
+            <Thumbnail URL={this.result.doclist.docs["0"].image_thumbnail["0"]} />
           </div>
         </div>
         {this.queryString.includes("&pt=") != true && (
@@ -112,7 +107,7 @@ export default {
               <div class="chapterTitle">chapter </div>
               <HighlightedChapter chapterString={snippets.chapter} query={this.result.query} />
               <div class="pageTitle">page </div>
-              {snippets.page == 0 ? <div class="pageNumber">1</div> : <div class="pageNumber">{snippets.page - 1}</div>}
+              {snippets.page == 0 ? <div class="pageNumber">1</div> : <div class="pageNumber">{snippets.page}</div>}
               <ul>
                 <HighlightedContent contentArray={snippets.highLightSnippets} query={this.result.query} />
               </ul>

@@ -15,10 +15,9 @@ export default {
         <div class="titleContainer">
           <h2>Meloar</h2>
           <hr style="width:300px" />
-          <span>Fund & fortidsminder</span>
+          <span>Partiprogrammer</span>
         </div>
         <SearchBox />
-        <SearchMap />
         <div class="simpleNavigation">
           <router-link class="menuLink" to="/About">
             About this
