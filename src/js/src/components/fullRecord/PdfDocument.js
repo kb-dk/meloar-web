@@ -16,7 +16,7 @@ export default {
   methods: {
     getUrl() {
       const proxyURL = encodeURIComponent(
-        "/api/meloar/pdf?url=" + this.record.doc.external_resource[0]
+        "/api/resource/meloar/partiprogrammer?url=" + this.record.doc.external_resource[0]
       );
       const viewerURL = "static/pdfviewer/web/viewer.html?file=";
       const pageParams = this.singlePage

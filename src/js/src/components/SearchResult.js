@@ -1,4 +1,4 @@
-import HighlightedChapter from "../components/HighlightedChapter";
+// import HighlightedChapter from "../components/HighlightedChapter";
 import HighlightedContent from "../components/HighlightedContent";
 import Thumbnail from "../components/Thumbnail";
 
@@ -105,7 +105,7 @@ export default {
               style={index > defaultVisibleSnippets - 1 && !this.showingAllSnippets ? "display:none" : "display:block"}
             >
               <div class="chapterTitle">chapter </div>
-              <HighlightedChapter chapterString={snippets.chapter} query={this.result.query} />
+               { /*<HighlightedChapter chapterString={snippets.chapter} query={this.result.query} /> */}
               <div class="pageTitle">page </div>
               {snippets.page == 0 ? <div class="pageNumber">1</div> : <div class="pageNumber">{snippets.page}</div>}
               <ul>
