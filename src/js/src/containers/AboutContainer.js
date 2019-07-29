@@ -16,7 +16,7 @@ export default {
         <br/>
         The development team is headed by Katrine Hofmann Gasser of the Royal Danish Library. Bolette Ammitzbøl Jurik harvested the documents and constructed the repository, while Toke Eskildsen created the search engine. 
         Jesper Lauridsen and Jørn Thøgersen also contributed by creating the user-interface. The graphics are created by Ea Rasmussen of Moesgaard Museum.
-        All data is provided by <a href="http://www.kulturarv.dk/fundogfortidsminder/">the Danish Agency for Culture and Palaces</a> and Jens-Bjørn Riis Andresen of Aarhus University, the Principal Investigator (PI) of this project.
+        All data is provided by <a href="http://www.kulturarv.dk/fundogfortidsminder/">the Danish Agency for Culture and Palaces</a> which keeps the copyright jointly with each single museum. Associate Professor Jens-Bjørn Riis Andresen of Aarhus University is the Principal Investigator (PI) of this project.
         <br />
         <br />
         If you have any suggestions for improvements for this service, please mail us at <a href="mailto:fof@cas.au.dk">fof@cas.au.dk</a>.
